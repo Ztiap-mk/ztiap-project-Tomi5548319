@@ -1,22 +1,25 @@
-class Tank {
+class Tank extends Node {
 	// Initialization
 	// TODO increment id, don't take it as a parameter
-	constructor(id) {
-		// Common properties
+	constructor(x, y, angle, canvas, imgSrc) {
+		// Construct a Node
+		super();
+		
+		this.x = x
+		this.y = y
 		this.width = canvas.width/10/2.5
 		this.height = canvas.height/10/2
-		this.rotationSpeed = 2
+		
 		this.movementSpeed = canvas.width/10/10/5
-		this.id = id
+		this.rotationSpeed = 2
 		
-		/*console.log("x = " + this.corners[0].x + "; y = " + this.corners[0].y)
+		this.angle = angle
+		this.dx = Math.cos(this.angle * Math.PI / 180) * (-1)
+		this.dy = Math.sin(this.angle * Math.PI / 180) * (-1)
 		
-		this.corners[0].x = 1
-		this.corners[0].y = 2
-		
-		console.log("x = " + this.corners[0].x + "; y = " + this.corners[0].y)*/
+		//this.id = id
 
-		switch(id){
+		/*switch(id){
 			case 0:
 				this.x = this.width/2 //canvas.width/10/4
 				this.y = this.height/2 //canvas.height/10/2
@@ -31,7 +34,7 @@ class Tank {
 				this.dx = 0
 				this.dy = -1
 				break
-		}
+		}*/
 		
 		this.corners = []
 		this.corners.push({x: (this.x - (this.dy * (this.width/2)) + (this.dx * (this.height/1.5))), y: (this.y + this.dy * (this.height/1.5) + this.dx * (this.width/2))}) // RIGHT FRONT
@@ -50,14 +53,14 @@ class Tank {
 	
 	rotate(direction){
 
-		this.rotation += direction * this.rotationSpeed
-		if(this.rotation < 0)
-			this.rotation += 360
+		this.angle += direction * this.rotationSpeed
+		if(this.angle < 0)
+			this.angle += 360
 
-		this.rotation %= 360;
+		this.angle %= 360;
 		
-		this.dx = Math.cos(this.rotation * Math.PI / 180) * (-1)
-		this.dy = Math.sin(this.rotation * Math.PI / 180) * (-1)
+		this.dx = Math.cos(this.angle * Math.PI / 180) * (-1)
+		this.dy = Math.sin(this.angle * Math.PI / 180) * (-1)
 		
 		this.correctPosition()
 	}
