@@ -1,14 +1,12 @@
-class Tank extends Node {
+class Tank extends GameObject {
 	// Initialization
 	// TODO increment id, don't take it as a parameter
-	constructor(x, y, angle, canvas, imgSrc) {
-		// Construct a Node
-		super();
+	constructor(canvas, x_mult, y_mult, width_mult, height_mult, angle, imgSrc) {
 		
-		this.x = x
-		this.y = y
-		this.width = canvas.width/10/2.5
-		this.height = canvas.height/10/2
+		// Construct a Widget
+		super(canvas, x_mult, y_mult, width_mult, height_mult);
+		
+		this.imgSrc = imgSrc
 		
 		this.movementSpeed = canvas.width/10/10/5
 		this.rotationSpeed = 2
@@ -17,30 +15,33 @@ class Tank extends Node {
 		this.dx = Math.cos(this.angle * Math.PI / 180) * (-1)
 		this.dy = Math.sin(this.angle * Math.PI / 180) * (-1)
 		
-		//this.id = id
-
-		/*switch(id){
-			case 0:
-				this.x = this.width/2 //canvas.width/10/4
-				this.y = this.height/2 //canvas.height/10/2
-				this.rotation = 270
-				this.dx = 0
-				this.dy = 1
-				break
-			case 1:
-				this.x = canvas.width - this.width/2 //canvas.width/100 * 97
-				this.y = canvas.height - this.height/2 //canvas.height/100 * 95
-				this.rotation = 90
-				this.dx = 0
-				this.dy = -1
-				break
-		}*/
-		
 		this.corners = []
 		this.corners.push({x: (this.x - (this.dy * (this.width/2)) + (this.dx * (this.height/1.5))), y: (this.y + this.dy * (this.height/1.5) + this.dx * (this.width/2))}) // RIGHT FRONT
 		this.corners.push({x: (this.x + (this.dy * (this.width/2)) + (this.dx * (this.height/1.5))), y: (this.y + this.dy * (this.height/1.5) - this.dx * (this.width/2))}) // LEFT FRONT
 		this.corners.push({x: (this.x - (this.dy * (this.width/2)) - (this.dx * (this.height/3))), y: (this.y - this.dy * (this.height/3) + this.dx * (this.width/2))}) // RIGHT REAR
 		this.corners.push({x: (this.x + (this.dy * (this.width/2)) - (this.dx * (this.height/3))), y: (this.y - this.dy * (this.height/3) - this.dx * (this.width/2))}) // LEFT REAR
+	}
+
+	// Redefine draw
+	ondraw(context) {
+		var tank = this
+		
+		var img = new Image()
+		img.src = tank.imgSrc
+		img.onload = function (){
+			context.save()
+		
+			// Move the image
+			context.translate(tank.x, tank.y)
+		
+			// Rotate the image
+			context.rotate(tank.angle * Math.PI / 180)
+
+			// Render the image
+			context.drawImage(img, -tank.width / 1.5, -tank.height / 2, tank.width, tank.height)
+			
+			context.restore()
+		}
 	}
 	
 	// Movement logic
@@ -48,7 +49,7 @@ class Tank extends Node {
 		this.x += direction * this.movementSpeed * this.dx
 		this.y += direction * this.movementSpeed * this.dy
 		
-		this.correctPosition()
+		this.correctPosition() // TODO remove this
 	}
 	
 	rotate(direction){
@@ -62,9 +63,10 @@ class Tank extends Node {
 		this.dx = Math.cos(this.angle * Math.PI / 180) * (-1)
 		this.dy = Math.sin(this.angle * Math.PI / 180) * (-1)
 		
-		this.correctPosition()
+		this.correctPosition() // TODO remove this
 	}
 	
+	// TODO remove this method
 	correctPosition(){
 		this.updateCornerPositions()
 		
@@ -82,6 +84,7 @@ class Tank extends Node {
 		}
 	}
 	
+	// TODO remove this
 	updateCornerPositions(){
 		this.corners[0] = {x: (this.x - (this.dy * (this.width/2)) + (this.dx * (this.height/1.5))), y: (this.y + this.dy * (this.height/1.5) + this.dx * (this.width/2))} // RIGHT FRONT
 		this.corners[1] = {x: (this.x + (this.dy * (this.width/2)) + (this.dx * (this.height/1.5))), y: (this.y + this.dy * (this.height/1.5) - this.dx * (this.width/2))} // LEFT FRONT
