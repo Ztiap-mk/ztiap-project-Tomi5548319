@@ -1,7 +1,7 @@
 function prepareTanks(canvas){
 	var nodes = []
 	
-	var width = 50
+	var width = 75
 	var height = 50
 	
 	// Add tanks
@@ -20,7 +20,7 @@ function prepareTanks(canvas){
 	}
 	nodes.push(tank1)
 	
-	var tank2 = new Tank(canvas, 1000 - width/2, 1000 - height/1.5, width, height, 90, "objects/tank_red.svg")
+	var tank2 = new Tank(canvas, 1600 - width/2, 900 - height/1.5, width, height, 90, "objects/tank_red.svg")
 	tank2.onkey = function() {
 		
 		if(app.keys["ArrowLeft"] === true)

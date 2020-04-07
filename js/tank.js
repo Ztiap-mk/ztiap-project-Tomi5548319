@@ -9,8 +9,8 @@ class Tank extends GameObject {
 		this.imgSrc = imgSrc
 		this.canvas = canvas
 		
-		this.movementSpeed = canvas.width/10/10/5
-		this.rotationSpeed = 2
+		this.movementSpeed = canvas.width/10/10/3
+		this.rotationSpeed = 3
 		
 		this.angle = angle
 		this.dx = Math.cos(this.angle * Math.PI / 180) * (-1)

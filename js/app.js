@@ -13,11 +13,14 @@ class App extends Widget {
   
   // Redefine draw
   ondraw(context) {
+	var app = this
+	  
 	// TODO change to clip from the game
 	var backgroundImg = new Image()
 	backgroundImg.src = "objects/background.png"
-	
-	context.drawImage(backgroundImg, 0, 0, this.canvas.width, this.canvas.height)
+	backgroundImg.onload = function (){
+		context.drawImage(backgroundImg, 0, 0, app.canvas.width, app.canvas.height)
+	}
   }
 
   
@@ -66,9 +69,9 @@ class App extends Widget {
       return false
     }
 
-    // Update 30times per second
-    setInterval(function () {
+    // Update 10times per second
+    /*setInterval(function () {
       app.update()
-    }, 1000 / 60)
+    }, 1000 / 60)*/
   }
 }
