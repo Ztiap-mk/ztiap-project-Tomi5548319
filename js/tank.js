@@ -7,6 +7,7 @@ class Tank extends GameObject {
 		super(canvas, x_mult, y_mult, width_mult, height_mult);
 		
 		this.imgSrc = imgSrc
+		this.canvas = canvas
 		
 		this.movementSpeed = canvas.width/10/10/5
 		this.rotationSpeed = 2
@@ -16,10 +17,10 @@ class Tank extends GameObject {
 		this.dy = Math.sin(this.angle * Math.PI / 180) * (-1)
 		
 		this.corners = []
-		this.corners.push({x: (this.x - (this.dy * (this.width/2)) + (this.dx * (this.height/1.5))), y: (this.y + this.dy * (this.height/1.5) + this.dx * (this.width/2))}) // RIGHT FRONT
-		this.corners.push({x: (this.x + (this.dy * (this.width/2)) + (this.dx * (this.height/1.5))), y: (this.y + this.dy * (this.height/1.5) - this.dx * (this.width/2))}) // LEFT FRONT
-		this.corners.push({x: (this.x - (this.dy * (this.width/2)) - (this.dx * (this.height/3))), y: (this.y - this.dy * (this.height/3) + this.dx * (this.width/2))}) // RIGHT REAR
-		this.corners.push({x: (this.x + (this.dy * (this.width/2)) - (this.dx * (this.height/3))), y: (this.y - this.dy * (this.height/3) - this.dx * (this.width/2))}) // LEFT REAR
+		this.corners.push({x: (this.x - (this.dy * (this.height/2)) + (this.dx * (this.width/1.5))), y: (this.y + this.dy * (this.width/2) + this.dx * (this.height/2))}) // RIGHT FRONT
+		this.corners.push({x: (this.x + (this.dy * (this.height/2)) + (this.dx * (this.width/1.5))), y: (this.y + this.dy * (this.width/2) - this.dx * (this.height/2))}) // LEFT FRONT
+		this.corners.push({x: (this.x - (this.dy * (this.height/2)) - (this.dx * (this.width/3))), y: (this.y - this.dy * (this.width/3) + this.dx * (this.height/2))}) // RIGHT REAR
+		this.corners.push({x: (this.x + (this.dy * (this.height/2)) - (this.dx * (this.width/3))), y: (this.y - this.dy * (this.width/3) - this.dx * (this.height/2))}) // LEFT REAR
 	}
 
 	// Redefine draw
@@ -42,6 +43,17 @@ class Tank extends GameObject {
 			
 			context.restore()
 		}
+		
+		//var context = app.context
+		
+		for(var i in this.corners){
+			context.fillStyle = "black"
+			context.beginPath();
+			context.arc(this.corners[i].x, this.corners[i].y, 1, 0, Math.PI * 2);
+			context.closePath();
+			context.fill();
+		}
+		
 	}
 	
 	// Movement logic
@@ -86,9 +98,9 @@ class Tank extends GameObject {
 	
 	// TODO remove this
 	updateCornerPositions(){
-		this.corners[0] = {x: (this.x - (this.dy * (this.width/2)) + (this.dx * (this.height/1.5))), y: (this.y + this.dy * (this.height/1.5) + this.dx * (this.width/2))} // RIGHT FRONT
-		this.corners[1] = {x: (this.x + (this.dy * (this.width/2)) + (this.dx * (this.height/1.5))), y: (this.y + this.dy * (this.height/1.5) - this.dx * (this.width/2))} // LEFT FRONT
-		this.corners[2] = {x: (this.x - (this.dy * (this.width/2)) - (this.dx * (this.height/3))), y: (this.y - this.dy * (this.height/3) + this.dx * (this.width/2))} // RIGHT REAR
-		this.corners[3] = {x: (this.x + (this.dy * (this.width/2)) - (this.dx * (this.height/3))), y: (this.y - this.dy * (this.height/3) - this.dx * (this.width/2))} // LEFT REAR
+		this.corners[0] = ({x: (this.x - (this.dy * (this.height/2)) + (this.dx * (this.width/2))), y: (this.y + this.dy * (this.width/2) + this.dx * (this.height/2))}) // RIGHT FRONT
+		this.corners[1] = ({x: (this.x + (this.dy * (this.height/2)) + (this.dx * (this.width/2))), y: (this.y + this.dy * (this.width/2) - this.dx * (this.height/2))}) // LEFT FRONT
+		this.corners[2] = ({x: (this.x - (this.dy * (this.height/2)) - (this.dx * (this.width/3))), y: (this.y - this.dy * (this.width/3) + this.dx * (this.height/2))}) // RIGHT REAR
+		this.corners[3] = ({x: (this.x + (this.dy * (this.height/2)) - (this.dx * (this.width/3))), y: (this.y - this.dy * (this.width/3) - this.dx * (this.height/2))}) // LEFT REAR
 	}
 }
