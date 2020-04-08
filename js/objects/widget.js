@@ -31,12 +31,11 @@ class Widget extends Node {
 
     // Check if localPoint is inside Widget boundary
     if (0 < localPoint.x && localPoint.x < this.width)
-      if (0 < localPoint.y && localPoint.y < this.height) 
-        // Call onclick function
-        this.onclick(localPoint)
+      if (0 < localPoint.y && localPoint.y < this.height)
+        this.onclick()
 
     // Send click event to observers
-    this.notify("click", localPoint) // note: localpoint not point
+    this.notify("click", point)
   }
   
   
@@ -50,6 +49,6 @@ class Widget extends Node {
 
   // Widget specific methods, need to be set manually
   ondraw(context) {}
-  onclick(point) {}
+  onclick() {}
   onkey() {}
 }

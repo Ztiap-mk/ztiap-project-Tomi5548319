@@ -12,9 +12,8 @@ class ImgButton extends GameObject {
 
 	var img = new Image()
 	img.src = button.imgSrc
-	img.onload = function (){
-		context.drawImage(img, button.x, button.y, button.width, button.height)
-	}
+	
+	context.drawImage(img, button.x, button.y, button.width, button.height)
   }
 
   // Redefine onclick function

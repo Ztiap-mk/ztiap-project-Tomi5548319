@@ -5,7 +5,6 @@ function prepareTanks(canvas, nodes){
 	// Add tanks
 	var tank1 = new Tank(canvas, width/2, height/1.5, width, height, 270, "objects/tank_green.svg")
 	tank1.onkey = function() {
-		
 		if(app.keys["a"] === true)
 			this.rotate(-1)
 		if(app.keys["d"] === true)
@@ -14,13 +13,14 @@ function prepareTanks(canvas, nodes){
 			this.move(1)
 		if(app.keys["s"] === true)
 			this.move(-1)
-		
+	}
+	tank1.onclick = function() {
+		app.nodes = gameOver(1, app.nodes, app.canvas)
 	}
 	nodes.push(tank1)
 	
 	var tank2 = new Tank(canvas, 1600 - width/2, 900 - height/1.5, width, height, 90, "objects/tank_red.svg")
 	tank2.onkey = function() {
-		
 		if(app.keys["ArrowLeft"] === true)
 			this.rotate(-1)
 		if(app.keys["ArrowRight"] === true)
@@ -29,6 +29,9 @@ function prepareTanks(canvas, nodes){
 			this.move(1)
 		if(app.keys["ArrowDown"] === true)
 			this.move(-1)
+	}
+	tank2.onclick = function() {
+		app.nodes = gameOver(2, app.nodes, app.canvas)
 	}
 	nodes.push(tank2)
 	

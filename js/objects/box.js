@@ -23,8 +23,8 @@ class Box extends GameObject {
 
 	var img = new Image()
 	img.src = box.src
-	img.onload = function (){
-		context.drawImage(img, box.x, box.y, box.width, box.height)
-	}
+	
+	context.drawImage(img, box.x, box.y, box.width, box.height)
+	
   }
 }

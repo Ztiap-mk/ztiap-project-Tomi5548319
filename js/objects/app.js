@@ -18,9 +18,9 @@ class App extends Widget {
 	// TODO change to clip from the game
 	var backgroundImg = new Image()
 	backgroundImg.src = "objects/background.png"
-	backgroundImg.onload = function (){
-		context.drawImage(backgroundImg, 0, 0, app.canvas.width, app.canvas.height)
-	}
+	
+	context.drawImage(backgroundImg, 0, 0, app.canvas.width, app.canvas.height)
+	
   }
 
   

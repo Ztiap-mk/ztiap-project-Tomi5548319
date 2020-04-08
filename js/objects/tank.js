@@ -26,20 +26,20 @@ class Tank extends GameObject {
 		
 		var img = new Image()
 		img.src = tank.imgSrc
-		img.onload = function (){
-			context.save()
 		
-			// Move the image
-			context.translate(tank.x, tank.y)
+		context.save()
 		
-			// Rotate the image
-			context.rotate(tank.angle * Math.PI / 180)
+		// Move the image
+		context.translate(tank.x, tank.y)
+		
+		// Rotate the image
+		context.rotate(tank.angle * Math.PI / 180)
 
-			// Render the image
-			context.drawImage(img, -tank.width / 1.5, -tank.height / 2, tank.width, tank.height)
+		// Render the image
+		context.drawImage(img, -tank.width / 1.5, -tank.height / 2, tank.width, tank.height)
 			
-			context.restore()
-		}
+		context.restore()
+		
 		
 		//var context = app.context
 		
@@ -53,6 +53,43 @@ class Tank extends GameObject {
 		
 	}
 	
+	// TODO remove this
+	// Redefine click (tank can be angled)
+	click(point) {
+
+		var clicked = false
+		
+		var max_x = this.corners[0].x
+		var min_x = this.corners[0].x
+		var max_y = this.corners[0].y
+		var min_y = this.corners[0].y
+		
+		// Not ideal, but works just fine for demonstration purposes
+		for(var i in this.corners){
+			if(this.corners[i].x > max_x)
+				max_x = this.corners[i].x
+			if(this.corners[i].x < min_x)
+				min_x = this.corners[i].x
+			if(this.corners[i].y > max_y)
+				max_y = this.corners[i].y
+			if(this.corners[i].y < min_y)
+				min_y = this.corners[i].y
+		}
+		
+		if(min_x < point.x && point.x < max_x && min_y < point.y && point.y < max_y)
+			clicked = true
+	
+		if(clicked){
+			// Call onclick function
+			this.onclick()
+
+			// Send click event to observers
+			this.notify("click", point)
+		}
+		
+		this.notify("click", point)
+	}
+	
 	// Movement logic
 	move(direction) {		
 		this.x += direction * this.movementSpeed * this.dx
@@ -61,6 +98,7 @@ class Tank extends GameObject {
 		this.updateCorners()
 	}
 	
+	// Rotation logic
 	rotate(direction){
 		this.angle += direction * this.rotationSpeed
 		if(this.angle < 0)

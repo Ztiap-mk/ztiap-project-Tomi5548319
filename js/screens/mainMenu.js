@@ -4,21 +4,18 @@ function mainMenu(canvas){
 	var buttonPlay = new ImgButton(canvas, "objects/button_play.png", 500, 200, 500, 150)
 	buttonPlay.action = function() {
 		app.nodes = round1(app.canvas)
-		console.log("Play clicked")
 	}
 	nodes.push(buttonPlay)
 	
 	var buttonSettings = new ImgButton(canvas, "objects/button_settings.png", 500, 400, 500, 150)
 	buttonSettings.action = function() {
 		app.nodes = settings(app.canvas)
-		console.log("Settings clicked")
 	}
 	nodes.push(buttonSettings)
 	
 	var buttonAbout = new ImgButton(canvas, "objects/button_about.png", 500, 600, 500, 150)
 	buttonAbout.action = function() {
 		app.nodes = about(app.canvas)
-		console.log("About clicked")
 	}
 	nodes.push(buttonAbout)
 	
