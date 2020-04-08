@@ -17,8 +17,8 @@ function mainMenu(canvas){
 	
 	var buttonAbout = new ImgButton(canvas, "objects/button_about.png", 500, 600, 500, 150)
 	buttonAbout.action = function() {
+		app.nodes = about(app.canvas)
 		console.log("About clicked")
-		//app.nodes = ...
 	}
 	nodes.push(buttonAbout)
 	
