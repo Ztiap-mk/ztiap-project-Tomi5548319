@@ -9,7 +9,36 @@ class App extends Widget {
     this.context = context
 	
 	this.keys = []
+	this.sounds = []
+	
+	this.volume = 0.5
+	this.muted = false
   }
+  
+  addSound(sound) {
+	if(this.muted)
+		sound.changeVolume(0)
+	else
+		sound.changeVolume(app.volume)
+		
+	sound.play()
+    this.sounds.push(sound)
+  }
+
+  
+  removeSound(sound) {
+	sound.stop()
+    var index = this.sounds.indexOf(sound)
+    delete this.sounds[index]
+  }
+  
+  
+  resetSounds() {
+	for(var i in this.sounds){
+		this.removeSound(this.sounds[i])
+	}
+  }
+  
   
   // Redefine draw
   ondraw(context) {
@@ -68,10 +97,14 @@ class App extends Widget {
       //app.key(event)
       return false
     }
+	
+	// Add nodes
+	app.nodes = mainMenu(app.canvas)
+	
+	// Start the music
+	var music = new Sound("sounds/home_screen_loop/Two Steps From Hell - To Glory.mp3", app.volume, 1);
+	music.sound.loop = true
+	app.addSound(music)
 
-    // Update 10times per second
-    /*setInterval(function () {
-      app.update()
-    }, 1000 / 60)*/
   }
 }

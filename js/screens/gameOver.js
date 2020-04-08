@@ -23,6 +23,13 @@ function gameOver(winner, nodes, canvas){
 	var buttonReturnToMainMenu = new ImgButton(canvas, "objects/button_returnToMainMenu.png", 370, 600, 250, 90)
 	buttonReturnToMainMenu.action = function (){
 		app.nodes = mainMenu(app.canvas)
+		
+		app.resetSounds()
+		
+		// Start the music
+		var music = new Sound("sounds/home_screen_loop/Two Steps From Hell - To Glory.mp3", app.volume, 1);
+		music.sound.loop = true
+		app.addSound(music)
 	}
 	window.add(buttonReturnToMainMenu)
 	
