@@ -1,6 +1,4 @@
-function prepareTanks(canvas){
-	var nodes = []
-	
+function prepareTanks(canvas, nodes){
 	var width = 75
 	var height = 50
 	

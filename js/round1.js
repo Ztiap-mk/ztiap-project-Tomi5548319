@@ -1,5 +1,5 @@
 function round1(canvas){
-	var nodes = prepareTanks(canvas)
+	var nodes = []
 	
 	var box_size = 50
 	
@@ -13,6 +13,7 @@ function round1(canvas){
 				nodes.push(new Box(canvas, "wood", i * box_size, j * box_size, box_size, box_size))
 		}
 
+	nodes = prepareTanks(canvas, nodes)
 	
 	return nodes
 }
