@@ -1,27 +1,28 @@
 class ImgButton extends GameObject {
-  constructor(canvas, src, x_mult, y_mult, width_mult, height_mult) {
-    // Construct Widget
-    super(canvas, x_mult, y_mult, width_mult, height_mult)
-	
-	this.imgSrc = src
-  }
+    constructor(canvas, src, x_mult, y_mult, width_mult, height_mult) {
+        // Construct Widget
+        super(canvas, x_mult, y_mult, width_mult, height_mult);
 
-  // Redefine ondraw function
-  ondraw(context) {
-	var button = this
+        this.imgSrc = src;
+    }
 
-	var img = new Image()
-	img.src = button.imgSrc
-	
-	context.drawImage(img, button.x, button.y, button.width, button.height)
-  }
+    // Redefine ondraw function
+    ondraw(context) {
+        var button = this;
 
-  // Redefine onclick function
-  onclick(event) {
-    if (this.action) return this.action()
-  }
+        var img = new Image();
+        img.src = button.imgSrc;
+
+        context.drawImage(img, button.x, button.y, button.width, button.height);
+    }
+
+    // Redefine onclick function
+    onclick(event) {
+        if (this.action) return this.action();
+    }
 
 
-  // By default do nothing
-  action() {}
+    // By default do nothing
+    action() {
+    }
 }
