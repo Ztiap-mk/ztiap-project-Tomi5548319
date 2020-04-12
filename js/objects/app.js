@@ -12,7 +12,7 @@ class App extends Widget {
         this.sounds = [];
 
         this.volume = 0.5;
-        this.muted = false; // TODO separate music and sounds
+        this.muted = true; // TODO separate music and sounds
     }
 
     addSound(sound) {

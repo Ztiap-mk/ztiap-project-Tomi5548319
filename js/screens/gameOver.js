@@ -6,7 +6,7 @@ function gameOver(winner, nodes, canvas){
 		nodes[i].onkey = function() {};
 	}
 	
-	// White background
+	// Light gray background
 	var window = new GameObject(canvas, 320, 180, 960, 540);
 	window.ondraw = function(context) {
 		// Draw white background
@@ -16,8 +16,8 @@ function gameOver(winner, nodes, canvas){
 		context.fill();
 		context.stroke();
 	};
-	
-	var textWinner = new Text(canvas, app.context, 400, 400, "Congratulations player " + winner + ", you win!", "green", 50);
+
+	var textWinner = new Text(canvas, app.context, 400, 400, 800, "Congratulations player " + winner + ", you win!", "green", 50);
 	window.add(textWinner);
 	
 	var buttonReturnToMainMenu = new ImgButton(canvas, "img/button_returnToMainMenu.png", 370, 600, 250, 90);
