@@ -6,7 +6,6 @@ class Text extends GameObject {
         this.colour = colour;
         this.font = this.height + "px Arial";
         this.textSize = this.height;
-        console.log(this.textSize);
         this.lines = this.splitTextIntoLines(text, context);
 
         this.height *= this.lines.length; // Update the height based on the number of lines

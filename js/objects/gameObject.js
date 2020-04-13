@@ -3,6 +3,7 @@ class GameObject extends Widget {
         // Construct a Widget
         super(x_mult * canvas.width / 1600, y_mult * canvas.height / 900, width_mult * canvas.width / 1600, height_mult * canvas.height / 900);
 
+        this.physical = true;
     }
 
 }

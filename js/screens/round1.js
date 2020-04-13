@@ -9,7 +9,7 @@ function round1(canvas) {
         for (j = 0; j < 900 / box_size; j++) {
             if ((i < 3 && j < 3) || (i > 1600 / box_size - 4 && j > 900 / box_size - 4)) // Empty space for players
                 continue;
-            if (i % 3 === 0 && j % 3 === 0)
+            if (i % 5 === 0 && j % 5 === 0)
                 nodes.push(new Box(canvas, "wood", i * box_size, j * box_size, box_size, box_size));
         }
 
