@@ -4,6 +4,7 @@ class ImgButton extends GameObject {
         super(canvas, x_mult, y_mult, width_mult, height_mult);
 
         this.imgSrc = src;
+        this.physical = false;
     }
 
     // Redefine ondraw function

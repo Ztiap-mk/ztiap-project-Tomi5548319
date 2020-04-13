@@ -3,10 +3,15 @@ class Text extends GameObject {
         // Construct a GameObject
         super(canvas, x_mult, y_mult, max_line_width_mult, textSize_mult);
 
-        this.colour = colour;
+        this.physical = false;
+
+        this.colourDefault = colour; // Default colour
+        this.colour = colour; // Actual colour
         this.font = this.height + "px Arial";
         this.textSize = this.height;
         this.lines = this.splitTextIntoLines(text, context);
+        this.border = false;
+        this.selected = false;
 
         this.height *= this.lines.length; // Update the height based on the number of lines
     }
@@ -14,10 +19,18 @@ class Text extends GameObject {
     // Redefine ondraw function
     ondraw(context) {
 
-        // Text boundary - use for debugging
-        /*context.beginPath();
-        context.rect(this.x, this.y, this.width, this.height);
-        context.stroke();*/
+        // Text border
+        if (this.border) {
+            context.strokeStyle = this.colour;
+            context.beginPath();
+            context.rect(this.x, this.y, this.width, this.height);
+            context.stroke();
+        }
+
+        if (this.selected)
+            this.colour = "green";
+        else
+            this.colour = this.colourDefault;
 
         // Write text down, line by line
         context.font = this.font;

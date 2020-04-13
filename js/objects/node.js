@@ -2,6 +2,8 @@ class Node {
     constructor() {
         // Observers to notify (nodes)
         this.nodes = [];
+
+        this.id = "default"; // Used for targetting specific nodes
     }
 
     // Add an observer (node)

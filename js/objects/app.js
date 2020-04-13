@@ -7,6 +7,7 @@ class App extends Widget {
 
         this.canvas = canvas;
         this.context = context;
+        this.resolution = "medium";
 
         this.keys = [];
         this.sounds = [];
@@ -36,6 +37,31 @@ class App extends Widget {
     resetSounds() {
         for (var i in this.sounds) {
             this.removeSound(this.sounds[i]);
+        }
+    }
+
+    changeResolution(new_size) {
+        for (var node of this.nodes) {
+            if (node instanceof Text && (node.id === "small" || node.id === "medium" || node.id === "big") && node.id !== new_size)
+                node.selected = false;
+        }
+
+        switch (new_size) {
+            case "small":
+                this.resolution = "small";
+                this.canvas.width = 800;
+                this.canvas.height = 450;
+                break;
+            case "big":
+                this.resolution = "big";
+                this.canvas.width = 1600;
+                this.canvas.height = 900;
+
+                break;
+            default:
+                this.resolution = "medium";
+                this.canvas.width = 1200;
+                this.canvas.height = 675;
         }
     }
 
