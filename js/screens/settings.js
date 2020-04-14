@@ -52,7 +52,7 @@ function settings(canvas) {
     nodes.push(buttonCancel);*/
 
     // Save the settings
-    var buttonSave = new ImgButton(canvas, "img/button_save.png", 700, 750, 300, 100);
+    var buttonSave = new ImgButton(canvas, "img/button_save.png", 650, 750, 300, 100);
     buttonSave.action = function () {
         app.nodes = mainMenu(app.canvas);
     };

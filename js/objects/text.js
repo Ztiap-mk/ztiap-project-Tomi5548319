@@ -44,20 +44,40 @@ class Text extends GameObject {
     // Split the entry text into lines, depending on the maximum line width
     splitTextIntoLines(text, context) {
         var lines = [];
+        var words = text.split(" ");
 
         var line = "";
         var lineWidth;
-        for (var i = 0; i < text.length; i++) {
-            context.font = this.font;
-            lineWidth = context.measureText(line + text[i]).width;
-            if (lineWidth < this.width) // Line is not too long
-                line += text[i];
-            else { // Line would be too long if we add another letter => add a line break
+        for (var i = 0; i < words.length; i++) {
+            if(words[i] === "{newLine}"){
                 lines.push(line); // Save the line
-                line = text[i]; // Start a new line
+                line = ""; // Empty the line
+                continue;
+            }
+            context.font = this.font;
+            if(context.measureText(words[i]).width > this.width) // This word is too long, and won't fit into a single line
+                break; // TODO split the word into multiple pieces, i.e. wo-rd
+            if(line === "") {
+                lineWidth = context.measureText(words[i]).width;
+                if (lineWidth <= this.width) // Line is not too long
+                    line += words[i];
+            }
+            else {
+                lineWidth = context.measureText(line + " " + words[i]).width;
+                if (lineWidth <= this.width) { // Line is not too long
+                    line += " ";
+                    line += words[i];
+                }
+            }
+
+            if(lineWidth > this.width) { // Line would be too long if we add another word => add a line break
+                lines.push(line); // Save the line
+                line = ""; // Empty the line
+                i--; // Read this word again
             }
         }
-        lines.push(line);
+
+        lines.push(line); // Save the last line
 
         return lines;
     }
