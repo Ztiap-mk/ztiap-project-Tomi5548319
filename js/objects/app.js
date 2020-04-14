@@ -14,6 +14,8 @@ class App extends Widget {
 
         this.volume = 0.5;
         this.muted = true; // TODO separate music and sounds
+
+        this.time = Date.now();
     }
 
     addSound(sound) {
@@ -81,8 +83,13 @@ class App extends Widget {
 
     // Detect events and notify observers
     update() {
+        var now = Date.now();
+        var dt = (now - this.time) / 100;
+        this.time = now;
+
         this.draw(this.context);
-        this.keyCheck();
+        this.keyCheck(dt);
+        this.collisionCheck(dt);
     }
 
 

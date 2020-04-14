@@ -7,6 +7,8 @@ class Widget extends Node {
         this.y = y;
         this.width = width;
         this.height = height;
+
+        this.physical = false;
     }
 
 
@@ -40,15 +42,24 @@ class Widget extends Node {
 
 
     // Keyboard handling
-    keyCheck() {
-        this.onkey();
+    keyCheck(dt) {
+        this.onkey(dt);
 
         // Send key message to observers
-        this.notify("keyCheck");
+        this.notify("keyCheck", dt);
+    }
+
+    collisionCheck(dt) {
+        if (this.physical)
+            this.checkCollision(app.nodes, dt);
+
+        // Send collision message to observers
+        this.notify("collisionCheck", dt);
     }
 
     // Widget specific methods, need to be set manually
     ondraw(context) {}
     onclick() {}
-    onkey() {}
+    onkey(dt) {}
+    checkCollision(scene) {}
 }

@@ -1,6 +1,5 @@
 class Tank extends GameObject {
     // Initialization
-    // TODO increment id, don't take it as a parameter
     constructor(canvas, x_mult, y_mult, width_mult, height_mult, angle, imgSrc) {
 
         // Construct a Widget
@@ -9,8 +8,8 @@ class Tank extends GameObject {
         this.imgSrc = imgSrc;
         this.canvas = canvas;
 
-        this.movementSpeed = canvas.width / 10 / 10 / 3;
-        this.rotationSpeed = 3;
+        this.movementSpeed = canvas.width / 10 / 7;
+        this.rotationSpeed = 13;
 
         this.angle = angle;
         this.dx = Math.cos(this.angle * Math.PI / 180) * (-1);
@@ -18,6 +17,13 @@ class Tank extends GameObject {
 
         this.corners = [];
         this.updateCorners();
+
+        // Old positions, for collision purposes
+        this.last_x = this.x;
+        this.last_y = this.y;
+        this.last_angle = this.angle;
+        this.last_dx = this.dx;
+        this.last_dy = this.dy;
     }
 
     // Redefine draw
@@ -38,20 +44,20 @@ class Tank extends GameObject {
         context.restore();
 
         // Render the corners
-        /*for (var i in this.corners) {
-            context.fillStyle = "black";
+        for (var i in this.corners) {
+            context.fillStyle = "red";
             context.beginPath();
             context.arc(this.corners[i].x, this.corners[i].y, 1, 0, Math.PI * 2);
             context.closePath();
             context.fill();
-        }*/
+        }
 
         // Render the x and y
-        /*context.fillStyle = "red";
+        context.fillStyle = "red";
         context.beginPath();
         context.arc(this.x, this.y, 1, 0, Math.PI * 2);
         context.closePath();
-        context.fill();*/
+        context.fill();
 
     }
 
@@ -90,58 +96,37 @@ class Tank extends GameObject {
     }
 
     // Movement logic
-    move(direction) {
+    move(dt) {
+        this.last_x = this.x;
+        this.last_y = this.y;
 
-        var last_x = this.x;
-        var last_y = this.y;
+        this.x += dt * this.movementSpeed * this.dx;
+        this.y += dt * this.movementSpeed * this.dy;
 
-        this.x += direction * this.movementSpeed * this.dx;
-        this.y += direction * this.movementSpeed * this.dy;
-
-        this.updateCorners();
-
-        var collision = this.checkCollision(app.nodes);
-        if (collision === -1) { // Tanks collided
-            this.x = last_x;
-            this.y = last_y;
-        }
-
-        this.updateCorners();
+        this.updateCorners(Math.abs(dt));
     }
 
     // Rotation logic
-    rotate(direction) {
+    rotate(dt) {
+        this.last_angle = this.angle;
+        this.last_dx = this.dx;
+        this.last_dy = this.dy;
 
-        var last_x = this.x;
-        var last_y = this.y;
-        var last_angle = this.angle;
-        var last_dx = this.dx;
-        var last_dy = this.dy;
-
-        this.angle += direction * this.rotationSpeed;
+        // Rotate
+        this.angle += dt * this.rotationSpeed;
         if (this.angle < 0)
             this.angle += 360;
 
         this.angle %= 360;
 
+        // Update the movement vectors
         this.dx = Math.cos(this.angle * Math.PI / 180) * (-1);
         this.dy = Math.sin(this.angle * Math.PI / 180) * (-1);
 
-        this.updateCorners();
-
-        var collision = this.checkCollision(app.nodes);
-        if (collision === -1) { // Tanks collided
-            this.x = last_x;
-            this.y = last_y;
-            this.angle = last_angle;
-            this.dx = last_dx;
-            this.dy = last_dy;
-        }
-
-        this.updateCorners();
+        this.updateCorners(Math.abs(dt));
     }
 
-    checkCollision(scene) {
+    checkCollision(scene, dt) {
         // Check each object
         for (var obj of scene) {
             // Object is not physical
@@ -150,38 +135,19 @@ class Tank extends GameObject {
             if (obj instanceof Tank) {
                 collisions = this.checkTankCollision(obj);
                 if (collisions.length)
-                    return -1; // Don't move
+                    this.onCollide(obj, dt); // Tanks collided
                 continue;
             }
-            collisions = this.checkSideCollision(obj);
+            if (obj instanceof Box) {
+                collisions = this.checkBoxCollision(obj);
 
-            for (var i = 0; i < collisions.length; i++) {
-                switch (collisions[i]) {
-                    case 1: // Top
-                        this.y -= this.movementSpeed;
-                        break;
-                    case 2: // Right
-                        this.x += this.movementSpeed;
-                        break;
-                    case 3: // Bottom
-                        this.y += this.movementSpeed;
-                        break;
-                    case 4: // Left
-                        this.x -= this.movementSpeed;
-                        break;
-                }
+                if (collisions.length)
+                    this.onCollide(obj, dt);
             }
-
-            if (collisions.length)
-                return true;
-
         }
-
-        // No collision occured
-        return false;
     }
 
-    checkSideCollision(object) {
+    checkBoxCollision(object) {
 
         var collisions = [];
 
@@ -296,20 +262,33 @@ class Tank extends GameObject {
         return collisions;
     }
 
-    updateCorners() {
+    onCollide(obj, dt) {
+        //if (obj instanceof Bullet)
+
+        this.x = this.last_x;
+        this.y = this.last_y;
+        this.dx = this.last_dx;
+        this.dy = this.last_dy;
+        this.angle = this.last_angle;
+
+        this.updateCorners(dt);
+
+    }
+
+    updateCorners(dt) {
         this.updateCornersPositions();
 
         // Check if corners are not outside of map
-        for (var i in this.corners) {
-            if (this.corners[i].x < 0)
-                this.x += this.movementSpeed * Math.abs(this.dx);
-            else if (this.corners[i].x > canvas.width)
-                this.x -= this.movementSpeed * Math.abs(this.dx);
+        for (var corner of this.corners) {
+            if (corner.x < 0)
+                this.x += dt * this.movementSpeed * Math.abs(this.dx);
+            else if (corner.x > canvas.width)
+                this.x -= dt * this.movementSpeed * Math.abs(this.dx);
 
-            if (this.corners[i].y < 0)
-                this.y += this.movementSpeed * Math.abs(this.dy);
-            else if (this.corners[i].y > canvas.height)
-                this.y -= this.movementSpeed * Math.abs(this.dy);
+            if (corner.y < 0)
+                this.y += dt * this.movementSpeed * Math.abs(this.dy);
+            else if (corner.y > canvas.height)
+                this.y -= dt * this.movementSpeed * Math.abs(this.dy);
 
         }
 
