@@ -10,6 +10,8 @@ class Tank extends GameObject {
 
         this.movementSpeed = canvas.width / 10 / 7;
         this.rotationSpeed = 13;
+        this.rof = 1000; // Rate of fire
+        this.lastShot = Date.now();
 
         this.angle = angle;
         this.dx = Math.cos(this.angle * Math.PI / 180) * (-1);
@@ -156,10 +158,15 @@ class Tank extends GameObject {
     }
 
     shoot() {
-        var bullet = new Bullet(app.canvas, (1600 * this.x) / app.canvas.width + this.dx * 50,
-            (900 * this.y) / app.canvas.height + this.dy * 50, 20, 20, this.dx, this.dy);
+        var time = Date.now();
+        if(time - this.lastShot > this.rof){ // Tank is allowed to shoot
+            this.lastShot = time;
 
-        app.add(bullet);
+            var bullet = new Bullet(app.canvas, (1600 * this.x) / app.canvas.width + this.dx * 50,
+                (900 * this.y) / app.canvas.height + this.dy * 50, 20, 20, this.dx, this.dy);
+
+            app.add(bullet);
+        }
     }
 
     checkCollision(scene, dt) {

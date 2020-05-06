@@ -61,10 +61,7 @@ class Bullet extends GameObject {
                 continue;
             }
             if (obj instanceof Box) {
-                collisions = this.checkBoxCollision(obj);
-
-                if (collisions.length)
-                    this.onCollide(obj, dt);
+                this.checkBoxCollision(obj);
             }
             if (obj instanceof Window) {
                 if(this.x - this.width/2 < obj.x || this.x + this.width/2 > obj.x + obj.width ||
@@ -79,7 +76,11 @@ class Bullet extends GameObject {
     }
 
     checkBoxCollision(obj) {
-        return [];
+        if(this.x > obj.x && this.x < obj.x + obj.width && this.y > obj.y && this.y < obj.y + obj.height){
+            obj.break(obj);
+            app.remove(this);
+        }
+
     }
 
     onCollide(obj, dt){

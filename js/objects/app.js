@@ -13,7 +13,7 @@ class App extends Widget {
         this.music;
 
         this.volume = 0.5;
-        this.muted = true;
+        this.muted = false;
 
         this.windowOffset = 100; // Offset of the in-game window
 
@@ -119,9 +119,5 @@ class App extends Widget {
 
         // Load the main menu
         app.nodes = mainMenu(app.canvas);
-
-        // Start the music
-        app.music = new Sound("sounds/home_screen_loop/Two Steps From Hell - To Glory.mp3", app.volume, 0.5);
-        app.music.sound.loop = true;
     }
 }

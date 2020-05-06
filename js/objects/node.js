@@ -13,8 +13,13 @@ class Node {
 
     // Remove an observer (node)
     remove(node) {
-        var index = this.nodes.indexOf(node);
-        this.nodes.splice(index, 1);
+        for(var obj of this.nodes)
+            if(node === obj){
+                var index = this.nodes.indexOf(node);
+                this.nodes.splice(index, 1);
+            } else if(obj.nodes.length > 0)
+                obj.remove(node);
+
     }
 
     // Notify observers (nodes) of an event
