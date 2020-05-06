@@ -24,6 +24,13 @@ class Tank extends GameObject {
         this.last_angle = this.angle;
         this.last_dx = this.dx;
         this.last_dy = this.dy;
+
+        // Very old positions, for collision purposes
+        this.llast_x = this.last_x;
+        this.llast_y = this.last_y;
+        this.llast_angle = this.last_angle;
+        this.llast_dx = this.last_dx;
+        this.llast_dy = this.last_dy;
     }
 
     // Redefine draw
@@ -97,17 +104,38 @@ class Tank extends GameObject {
 
     // Movement logic
     move(dt) {
+
+        this.llast_x = this.last_x;
+        this.llast_y = this.last_y;
+        this.llast_angle = this.last_angle;
+        this.llast_dx = this.last_dx;
+        this.llast_dy = this.last_dy;
+
         this.last_x = this.x;
         this.last_y = this.y;
+        this.last_angle = this.angle;
+        this.last_dx = this.dx;
+        this.last_dy = this.dy;
 
+        // Move
         this.x += dt * this.movementSpeed * this.dx;
         this.y += dt * this.movementSpeed * this.dy;
 
+        app.collisionCheck(dt);
         this.updateCorners(Math.abs(dt));
     }
 
     // Rotation logic
     rotate(dt) {
+
+        this.llast_x = this.last_x;
+        this.llast_y = this.last_y;
+        this.llast_angle = this.last_angle;
+        this.llast_dx = this.last_dx;
+        this.llast_dy = this.last_dy;
+
+        this.last_x = this.x;
+        this.last_y = this.y;
         this.last_angle = this.angle;
         this.last_dx = this.dx;
         this.last_dy = this.dy;
@@ -123,12 +151,14 @@ class Tank extends GameObject {
         this.dx = Math.cos(this.angle * Math.PI / 180) * (-1);
         this.dy = Math.sin(this.angle * Math.PI / 180) * (-1);
 
+        app.collisionCheck(dt);
         this.updateCorners(Math.abs(dt));
     }
 
     checkCollision(scene, dt) {
         // Check each object
         for (var obj of scene) {
+            if(obj.nodes.length > 0) this.checkCollision(obj.nodes, dt); // This object contains objects inside
             // Object is not physical
             if (!obj.physical || obj === this) continue;
             var collisions;
@@ -265,14 +295,15 @@ class Tank extends GameObject {
     onCollide(obj, dt) {
         //if (obj instanceof Bullet)
 
-        this.x = this.last_x;
-        this.y = this.last_y;
-        this.dx = this.last_dx;
-        this.dy = this.last_dy;
-        this.angle = this.last_angle;
+        console.log("Collision");
+
+        this.x = this.llast_x;
+        this.y = this.llast_y;
+        this.dx = this.llast_dx;
+        this.dy = this.llast_dy;
+        this.angle = this.llast_angle;
 
         this.updateCorners(dt);
-
     }
 
     updateCorners(dt) {
@@ -285,9 +316,9 @@ class Tank extends GameObject {
             else if (corner.x > canvas.width)
                 this.x -= dt * this.movementSpeed * Math.abs(this.dx);
 
-            if (corner.y < 0)
+            if (corner.y < app.windowOffset * canvas.height / 900)
                 this.y += dt * this.movementSpeed * Math.abs(this.dy);
-            else if (corner.y > canvas.height)
+            else if (corner.y > canvas.height - app.windowOffset * canvas.height / 900)
                 this.y -= dt * this.movementSpeed * Math.abs(this.dy);
 
         }

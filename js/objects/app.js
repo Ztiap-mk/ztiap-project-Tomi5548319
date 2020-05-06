@@ -10,36 +10,14 @@ class App extends Widget {
         this.resolution = "medium";
 
         this.keys = [];
-        this.sounds = [];
+        this.music;
 
         this.volume = 0.5;
-        this.muted = true; // TODO separate music and sounds
+        this.muted = true;
+
+        this.windowOffset = 100; // Offset of the in-game window
 
         this.time = Date.now();
-    }
-
-    addSound(sound) {
-        if (this.muted)
-            sound.changeVolume(0);
-        else
-            sound.changeVolume(app.volume);
-
-        sound.play();
-        this.sounds.push(sound);
-    }
-
-
-    removeSound(sound) {
-        sound.stop();
-        var index = this.sounds.indexOf(sound);
-        delete this.sounds[index];
-    }
-
-
-    resetSounds() {
-        for (var i in this.sounds) {
-            this.removeSound(this.sounds[i]);
-        }
     }
 
     changeResolution(new_size) {
@@ -89,7 +67,6 @@ class App extends Widget {
 
         this.draw(this.context);
         this.keyCheck(dt);
-        this.collisionCheck(dt);
     }
 
 
@@ -125,9 +102,7 @@ class App extends Widget {
         app.nodes = mainMenu(app.canvas);
 
         // Start the music
-        var music = new Sound("sounds/home_screen_loop/Two Steps From Hell - To Glory.mp3", app.volume, 0.5);
-        music.sound.loop = true;
-        app.addSound(music);
-
+        app.music = new Sound("sounds/home_screen_loop/Two Steps From Hell - To Glory.mp3", app.volume, 0.5);
+        app.music.sound.loop = true;
     }
 }

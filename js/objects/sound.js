@@ -12,6 +12,14 @@ class Sound {
         this.sound.style.display = "none";
 
         document.body.appendChild(this.sound);
+
+        if (app.muted)
+            this.changeVolume(0);
+        else{
+            this.changeVolume(app.volume);
+        }
+
+        this.play();
     }
 
     play() {

@@ -8,6 +8,7 @@ function gameOver(winner, nodes, canvas){
 	
 	// Light gray background
 	var window = new GameObject(canvas, 320, 180, 960, 540);
+	window.physical = false;
 	window.ondraw = function(context) {
 		// Draw white background
 		context.beginPath();
@@ -23,13 +24,6 @@ function gameOver(winner, nodes, canvas){
 	var buttonReturnToMainMenu = new ImgButton(canvas, "img/button_returnToMainMenu.png", 370, 600, 250, 90);
 	buttonReturnToMainMenu.action = function (){
 		app.nodes = mainMenu(app.canvas);
-		
-		app.resetSounds();
-		
-		// Start the music
-		var music = new Sound("sounds/home_screen_loop/Two Steps From Hell - To Glory.mp3", app.volume, 0.5);
-		music.sound.loop = true;
-		app.addSound(music);
 	};
 	window.add(buttonReturnToMainMenu);
 	

@@ -3,7 +3,7 @@ function prepareTanks(canvas, nodes) {
     var height = 50;
 
     // Add tanks
-    var tank1 = new Tank(canvas, width / 2, height / 1.5, width, height, 270, "img/tank_green.svg");
+    var tank1 = new Tank(canvas, width / 2, app.windowOffset + height / 1.5, width, height, 270, "img/tank_green.svg");
     tank1.onkey = function (dt) {
         if (app.keys["a"] === true)
             this.rotate(-dt);
@@ -19,7 +19,7 @@ function prepareTanks(canvas, nodes) {
     };
     nodes.push(tank1);
 
-    var tank2 = new Tank(canvas, 1600 - width / 2, 900 - height / 1.5, width, height, 90, "img/tank_red.svg");
+    var tank2 = new Tank(canvas, 1600 - width / 2, 900 - app.windowOffset - height / 1.5, width, height, 90, "img/tank_red.svg");
     tank2.onkey = function (dt) {
         if (app.keys["ArrowLeft"] === true)
             this.rotate(-dt);
