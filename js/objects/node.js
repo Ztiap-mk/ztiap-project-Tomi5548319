@@ -14,7 +14,7 @@ class Node {
     // Remove an observer (node)
     remove(node) {
         var index = this.nodes.indexOf(node);
-        delete this.nodes[index];
+        this.nodes.splice(index, 1);
     }
 
     // Notify observers (nodes) of an event

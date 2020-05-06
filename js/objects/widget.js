@@ -57,9 +57,16 @@ class Widget extends Node {
         this.notify("collisionCheck", dt);
     }
 
+    update(dt) {
+        this.onUpdate(dt);
+
+        this.notify("update", dt);
+    }
+
     // Widget specific methods, need to be set manually
     ondraw(context) {}
     onclick() {}
     onkey(dt) {}
     checkCollision(scene) {}
+    onUpdate(dt) {}
 }

@@ -2,7 +2,7 @@ class Tank extends GameObject {
     // Initialization
     constructor(canvas, x_mult, y_mult, width_mult, height_mult, angle, imgSrc) {
 
-        // Construct a Widget
+        // Construct an Object
         super(canvas, x_mult, y_mult, width_mult, height_mult);
 
         this.imgSrc = imgSrc;
@@ -155,10 +155,17 @@ class Tank extends GameObject {
         this.updateCorners(Math.abs(dt));
     }
 
+    shoot() {
+        var bullet = new Bullet(app.canvas, (1600 * this.x) / app.canvas.width + this.dx * 50,
+            (900 * this.y) / app.canvas.height + this.dy * 50, 20, 20, this.dx, this.dy);
+
+        app.add(bullet);
+    }
+
     checkCollision(scene, dt) {
         // Check each object
         for (var obj of scene) {
-            if(obj.nodes.length > 0) this.checkCollision(obj.nodes, dt); // This object contains objects inside
+            if (obj.nodes.length > 0) this.checkCollision(obj.nodes, dt); // This object contains objects inside
             // Object is not physical
             if (!obj.physical || obj === this) continue;
             var collisions;
@@ -294,8 +301,6 @@ class Tank extends GameObject {
 
     onCollide(obj, dt) {
         //if (obj instanceof Bullet)
-
-        console.log("Collision");
 
         this.x = this.llast_x;
         this.y = this.llast_y;

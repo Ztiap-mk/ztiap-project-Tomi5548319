@@ -55,7 +55,6 @@ class App extends Widget {
         backgroundImg.src = "img/background.png";
 
         context.drawImage(backgroundImg, 0, 0, app.canvas.width, app.canvas.height);
-
     }
 
 
@@ -67,6 +66,26 @@ class App extends Widget {
 
         this.draw(this.context);
         this.keyCheck(dt);
+
+        this.notify("update", dt);
+    }
+
+
+    stopMovement(node) {
+        // disable objects onclick() and onkey() => they will stop moving
+        for (var obj of node.nodes) {
+            if (obj instanceof Tank) {
+                obj.onclick = function () {
+                };
+                obj.onkey = function () {
+                };
+            } else if (obj instanceof Bullet) {
+                obj.move = function () {
+                };
+            }
+
+            if (obj.nodes.length > 0) app.stopMovement(obj); // Object contains objects inside
+        }
     }
 
 

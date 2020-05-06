@@ -13,6 +13,8 @@ function prepareTanks(canvas, nodes) {
             this.move(dt);
         if (app.keys["s"] === true)
             this.move(-dt);
+        if (app.keys["c"] === true)
+            this.shoot();
     };
     tank1.onclick = function () {
         app.nodes = gameOver(1, app.nodes, app.canvas);
@@ -29,6 +31,8 @@ function prepareTanks(canvas, nodes) {
             this.move(dt);
         if (app.keys["ArrowDown"] === true)
             this.move(-dt);
+        if (app.keys["l"] === true)
+            this.shoot();
     };
     tank2.onclick = function () {
         app.nodes = gameOver(2, app.nodes, app.canvas);
