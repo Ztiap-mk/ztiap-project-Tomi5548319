@@ -12,12 +12,21 @@ function round1(canvas) {
 
     var box_size = 50;
 
-    // Fill the whole map with boxes
+    // Fill the whole map
     var i;
     for (i = 0; i < 1600 / box_size; i++)
-        for (j = app.windowOffset / box_size; j < 800 / box_size; j++) {
+        for (j = app.windowOffset / box_size; j < (900 - app.windowOffset) / box_size; j++) {
             if ((i < 3 && j < 3 + app.windowOffset/box_size) || (i > 1600 / box_size - 4 && j > 900 / box_size - 4 - app.windowOffset/box_size)) // Empty space for players
                 continue;
+            if(i === 3 && j < 6 + app.windowOffset / box_size){ // left wall
+                window.add(new Box(canvas, "wall", i * box_size, j * box_size, box_size, box_size));
+                continue;
+            }
+            if(i === 1600 / box_size - 4 && j > (900 - app.windowOffset) / box_size - 7){ // right wall
+                window.add(new Box(canvas, "wall", i * box_size, j * box_size, box_size, box_size));
+                continue;
+            }
+
             if (i % 5 === 0 && j % 5 === 0)
                 window.add(new Box(canvas, "wood", i * box_size, j * box_size, box_size, box_size));
         }

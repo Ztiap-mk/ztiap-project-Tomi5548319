@@ -28,19 +28,22 @@ class Box extends GameObject {
 
     }
 
-    break(obj) {
+    break(strength) {
         var sound;
 
         switch (this.type) {
             case "iron":
-                sound = new Sound("sounds/iron_box_broken/edited.mp3", app.volume, 0.3);
-                app.remove(obj);
+                if (strength > 1) {
+                    sound = new Sound("sounds/iron_box_broken/edited.mp3", app.volume, 0.3);
+                    app.remove(this);
+                } else {
+                    sound = new Sound("sounds/object_not_broken/edited.mp3", app.volume, 0.3);
+                }
+
                 break;
             case "wood":
                 sound = new Sound("sounds/wooden_box_broken/edited.mp3", app.volume, 0.3);
-                console.log(app);
-                app.remove(obj);
-                console.log(app);
+                app.remove(this);
                 break;
             default:
                 sound = new Sound("sounds/object_not_broken/edited.mp3", app.volume, 0.3);

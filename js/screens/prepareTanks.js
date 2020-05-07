@@ -16,8 +16,8 @@ function prepareTanks(canvas, nodes) {
         if (app.keys["c"] === true)
             this.shoot();
     };
-    tank1.onclick = function () {
-        app.nodes = gameOver(1, app.nodes, app.canvas);
+    tank1.lose = function () {
+        app.nodes = gameOver(2, app.nodes, app.canvas);
     };
     nodes.push(tank1);
 
@@ -34,8 +34,8 @@ function prepareTanks(canvas, nodes) {
         if (app.keys["l"] === true)
             this.shoot();
     };
-    tank2.onclick = function () {
-        app.nodes = gameOver(2, app.nodes, app.canvas);
+    tank2.lose = function () {
+        app.nodes = gameOver(1, app.nodes, app.canvas);
     };
     nodes.push(tank2);
 

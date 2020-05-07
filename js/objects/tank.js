@@ -10,7 +10,11 @@ class Tank extends GameObject {
 
         this.movementSpeed = canvas.width / 10 / 7;
         this.rotationSpeed = 13;
+
+        this.hp = 3;
+
         this.rof = 1000; // Rate of fire
+        this.bulletStrength = 1;
         this.lastShot = Date.now();
 
         this.angle = angle;
@@ -52,21 +56,21 @@ class Tank extends GameObject {
 
         context.restore();
 
-        // Render the corners
-        for (var i in this.corners) {
+        // Render the corners - use for debugging only
+        /*for (var i in this.corners) {
             context.fillStyle = "red";
             context.beginPath();
             context.arc(this.corners[i].x, this.corners[i].y, 1, 0, Math.PI * 2);
             context.closePath();
             context.fill();
-        }
+        }*/
 
-        // Render the x and y
-        context.fillStyle = "red";
+        // Render the x and y - use for debugging only
+        /*context.fillStyle = "red";
         context.beginPath();
         context.arc(this.x, this.y, 1, 0, Math.PI * 2);
         context.closePath();
-        context.fill();
+        context.fill();*/
 
     }
 
@@ -74,30 +78,56 @@ class Tank extends GameObject {
     // Redefine click (tank can be angled)
     click(point) {
 
-        var clicked = false;
+        var clicked = false; // Tank was clicked
 
-        var max_x = this.corners[0].x;
-        var min_x = this.corners[0].x;
-        var max_y = this.corners[0].y;
-        var min_y = this.corners[0].y;
+        var collisions = [];
 
-        // Not ideal, but works just fine for demonstration purposes
-        for (var i in this.corners) {
-            if (this.corners[i].x > max_x)
-                max_x = this.corners[i].x;
-            if (this.corners[i].x < min_x)
-                min_x = this.corners[i].x;
-            if (this.corners[i].y > max_y)
-                max_y = this.corners[i].y;
-            if (this.corners[i].y < min_y)
-                min_y = this.corners[i].y;
+        // Check collision of 4 lines (tanks sides) with click
+        for (var i = 0; i < 4; i++) {
+            // Tank side
+            var line1 = {
+                x1: this.corners[i].x,
+                y1: this.corners[i].y,
+                x2: this.corners[(i + 1) % 4].x,
+                y2: this.corners[(i + 1) % 4].y
+            };
+
+            // outside of canvas and other side of click
+            var line2 = {
+                x1: -1,
+                y1: -1,
+                x2: point.x,
+                y2: point.y
+            };
+
+            if (linesCollide(line1, line2))
+                collisions.push(i);
+
         }
 
-        if (min_x < point.x && point.x < max_x && min_y < point.y && point.y < max_y)
-            clicked = true;
+        //app.add(new Line(-1, -1, point.x, point.y));
+
+        var min_x = this.corners[0].x;
+        var max_x = min_x;
+        var min_y = this.corners[0].y;
+        var max_y = min_y;
+
+        for(var corner of this.corners){
+            if(corner.x < min_x)
+                min_x = corner.x
+            if(corner.x > max_x)
+                max_x = corner.x;
+            if(corner.y < min_y)
+                min_y = corner.y;
+            if(corner.y > max_y)
+                max_y = corner.y;
+        }
+
+        clicked = collisions.length === 1 && point.x > min_x && point.x < max_x && point.y > min_y && point.y < max_y;
 
         if (clicked) {
             // Call onclick function
+            console.log("clicked");
             this.onclick();
         }
 
@@ -126,6 +156,9 @@ class Tank extends GameObject {
         app.collisionCheck(dt);
         this.updateCorners(Math.abs(dt));
     }
+
+    // Tank specific function
+    lose() {}
 
     // Rotation logic
     rotate(dt) {
@@ -163,7 +196,7 @@ class Tank extends GameObject {
             this.lastShot = time;
 
             var bullet = new Bullet(app.canvas, (1600 * this.x) / app.canvas.width + this.dx * 50,
-                (900 * this.y) / app.canvas.height + this.dy * 50, 20, 20, this.dx, this.dy);
+                (900 * this.y) / app.canvas.height + this.dy * 50, 20, 20, this.dx, this.dy, this.bulletStrength);
 
             app.add(bullet);
         }
@@ -307,8 +340,6 @@ class Tank extends GameObject {
     }
 
     onCollide(obj, dt) {
-        //if (obj instanceof Bullet)
-
         this.x = this.llast_x;
         this.y = this.llast_y;
         this.dx = this.llast_dx;

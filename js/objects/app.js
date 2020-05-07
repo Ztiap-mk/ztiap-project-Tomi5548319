@@ -13,7 +13,7 @@ class App extends Widget {
         this.music;
 
         this.volume = 0.5;
-        this.muted = false;
+        this.muted = true;
 
         this.windowOffset = 100; // Offset of the in-game window
 

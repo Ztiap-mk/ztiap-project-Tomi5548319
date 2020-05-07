@@ -13,6 +13,7 @@ class Window extends GameObject {
         context.beginPath();
         context.rect(this.x, this.y, this.width, this.height);
         context.fillStyle = this.backgroundColor;
+        context.strokeStyle = "black";
         context.fill();
         context.stroke();
     }
