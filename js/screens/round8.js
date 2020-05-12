@@ -1,4 +1,5 @@
-function round1(canvas) {
+function round8(canvas) {
+    // TODO make different maps
     var nodes = [];
 
     // Add in-game music

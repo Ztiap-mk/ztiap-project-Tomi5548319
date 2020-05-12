@@ -27,6 +27,14 @@ function prepareTanks(canvas, nodes) {
     hp = new Hp(3, app.canvas, 80, 800, 50, 50);
     tank1.add(hp);
 
+    // Bullet strength indicators
+    var ammo = new Ammo(1, app.canvas, 0, 850, 50, 50);
+    tank1.add(ammo);
+    ammo = new Ammo(2, app.canvas, 40, 850, 50, 50);
+    tank1.add(ammo);
+    ammo = new Ammo(3, app.canvas, 80, 850, 50, 50);
+    tank1.add(ammo);
+
     nodes.push(tank1);
 
     var tank2 = new Tank(canvas, 1600 - width / 2, 900 - app.windowOffset - height / 1.5, width, height, 90, "img/tank_red.svg");
@@ -53,6 +61,14 @@ function prepareTanks(canvas, nodes) {
     tank2.add(hp);
     hp = new Hp(3, app.canvas, 1550, 800, 50, 50);
     tank2.add(hp);
+
+    // Bullet strength indicators
+    ammo = new Ammo(1, app.canvas, 1470, 850, 50, 50);
+    tank1.add(ammo);
+    ammo = new Ammo(2, app.canvas, 1510, 850, 50, 50);
+    tank1.add(ammo);
+    ammo = new Ammo(3, app.canvas, 1550, 850, 50, 50);
+    tank1.add(ammo);
 
     nodes.push(tank2);
 

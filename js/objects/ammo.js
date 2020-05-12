@@ -1,10 +1,13 @@
-class Hp extends GameObject {
+class Ammo extends GameObject {
     constructor(id, canvas, x_mult, y_mult, width_mult, height_mult) {
         // Construct a Widget
         super(canvas, x_mult, y_mult, width_mult, height_mult);
 
         this.id = id;
-        this.src = "img/hp_full.svg";
+        if(id === 1)
+            this.src = "img/ammo_full.svg";
+        else
+            this.src = "img/ammo_empty.svg";
 
         this.physical = false;
     }
