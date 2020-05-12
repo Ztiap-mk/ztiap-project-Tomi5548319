@@ -196,7 +196,7 @@ class Tank extends GameObject {
             this.lastShot = time;
 
             var bullet = new Bullet(app.canvas, (1600 * this.x) / app.canvas.width + this.dx * 50,
-                (900 * this.y) / app.canvas.height + this.dy * 50, 20, 20, this.dx, this.dy, this.bulletStrength);
+                (900 * this.y) / app.canvas.height + this.dy * 50, 15, 15, this.dx, this.dy, this.bulletStrength);
 
             app.add(bullet);
         }

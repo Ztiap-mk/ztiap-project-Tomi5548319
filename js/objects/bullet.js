@@ -133,6 +133,9 @@ class Bullet extends GameObject {
     }
 
     checkBoxCollision(obj) {
+        return this.x > obj.x && this.x < obj.x + obj.width && this.y > obj.y && this.y < obj.y + obj.height;
+
+        /* Old but usefull code
         // Box left side
         if (this.x + this.width/2 > obj.x && this.x + this.width/2 < obj.x + obj.width && this.y > obj.y && this.y < obj.y + obj.height) {
             return true;
@@ -154,15 +157,24 @@ class Bullet extends GameObject {
         }
 
         return false;
+        */
     }
 
     onCollide(obj, dt) {
         if (obj instanceof Tank){
             var sound;
+            for(var hp of obj.nodes)
+                if(hp instanceof Hp && hp.id === obj.hp)
+                    hp.src = "img/hp_empty.svg";
+
             obj.hp -= 1;
             if(obj.hp === 0){
                 obj.lose();
+
+                for(var node of obj.nodes)
+                    app.add(node);
                 app.remove(obj);
+
                 sound = new Sound("sounds/enemy_destroyed/edited.mp3", app.volume, 0.3);
             } else {
                 sound = new Sound("sounds/damage_caused/edited.mp3", app.volume, 1);

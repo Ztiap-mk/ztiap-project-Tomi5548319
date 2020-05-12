@@ -19,12 +19,11 @@ class Box extends GameObject {
 
     // Redefine ondraw function
     ondraw(context) {
-        var box = this;
 
         var img = new Image();
-        img.src = box.src;
+        img.src = this.src;
 
-        context.drawImage(img, box.x, box.y, box.width, box.height);
+        context.drawImage(img, this.x, this.y, this.width, this.height);
 
     }
 
