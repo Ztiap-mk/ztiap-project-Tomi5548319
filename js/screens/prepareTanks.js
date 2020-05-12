@@ -1,8 +1,8 @@
-function prepareTanks(canvas, nodes) {
+function prepareTanks(canvas, nodes, roundsWon1, roundsWon2) {
     var width = 75;
     var height = 50;
 
-    var tank1 = new Tank(canvas, width / 2, app.windowOffset + height / 1.5, width, height, 270, "img/tank_green.svg");
+    var tank1 = new Tank(canvas, width / 2, app.windowOffset + height / 1.5, width, height, 270, "img/tank_green.svg", roundsWon1);
     tank1.onkey = function (dt) {
         if (app.keys["a"] === true)
             this.rotate(-dt);
@@ -16,7 +16,18 @@ function prepareTanks(canvas, nodes) {
             this.shoot();
     };
     tank1.lose = function () {
-        app.nodes = gameOver(2, app.nodes, app.canvas);
+        var enemy = app.getEnemyTank(app, this);
+        enemy.roundsWon++;
+
+        if(enemy.roundsWon === 5){
+            for(var node of enemy.nodes)
+                if(node instanceof Text)
+                    node.lines = node.splitTextIntoLines("" + enemy.roundsWon, app.context);
+            app.nodes = gameOver(2, app.nodes, app.canvas);
+        }
+        else
+            eval("app.nodes = round" + ((enemy.roundsWon + this.roundsWon) % 9 + 1) + "(app.canvas, " + this.roundsWon + ", " + enemy.roundsWon + ");");
+
     };
 
     // HP indicators
@@ -35,9 +46,19 @@ function prepareTanks(canvas, nodes) {
     ammo = new Ammo(3, app.canvas, 80, 850, 50, 50);
     tank1.add(ammo);
 
+    // Rounds won indicator
+    var roundsWon = new Text(app.canvas, app.context, 700, 15, 50, "" + roundsWon1, "green", 50);
+    tank1.add(roundsWon);
+
     nodes.push(tank1);
 
-    var tank2 = new Tank(canvas, 1600 - width / 2, 900 - app.windowOffset - height / 1.5, width, height, 90, "img/tank_red.svg");
+    // Dash between points indicators
+    var dash = new Text(app.canvas, app.context, 760, 15, 30, "-", "black", 50);
+    nodes.push(dash);
+
+
+
+    var tank2 = new Tank(canvas, 1600 - width / 2, 900 - app.windowOffset - height / 1.5, width, height, 90, "img/tank_red.svg", roundsWon2);
     tank2.onkey = function (dt) {
         if (app.keys["ArrowLeft"] === true)
             this.rotate(-dt);
@@ -51,7 +72,19 @@ function prepareTanks(canvas, nodes) {
             this.shoot();
     };
     tank2.lose = function () {
-        app.nodes = gameOver(1, app.nodes, app.canvas);
+        var enemy = app.getEnemyTank(app, this);
+        enemy.roundsWon++;
+
+        if(enemy.roundsWon === 5){
+            for(var node of enemy.nodes)
+                if(node instanceof Text)
+                    node.lines = node.splitTextIntoLines("" + enemy.roundsWon, app.context);
+            app.nodes = gameOver(1, app.nodes, app.canvas);
+        }
+        else
+            eval("app.nodes = round" + ((enemy.roundsWon + this.roundsWon) % 9 + 1) + "(app.canvas, " + enemy.roundsWon + ", " + this.roundsWon + ");");
+
+
     };
 
     // HP indicators
@@ -69,6 +102,10 @@ function prepareTanks(canvas, nodes) {
     tank1.add(ammo);
     ammo = new Ammo(3, app.canvas, 1550, 850, 50, 50);
     tank1.add(ammo);
+
+    // Rounds won indicator
+    roundsWon = new Text(app.canvas, app.context, 800, 15, 50, "" + roundsWon2, "red", 50);
+    tank2.add(roundsWon);
 
     nodes.push(tank2);
 

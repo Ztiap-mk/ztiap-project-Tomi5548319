@@ -1,6 +1,6 @@
 class Tank extends GameObject {
     // Initialization
-    constructor(canvas, x_mult, y_mult, width_mult, height_mult, angle, imgSrc) {
+    constructor(canvas, x_mult, y_mult, width_mult, height_mult, angle, imgSrc, roundsWon) {
 
         // Construct an Object
         super(canvas, x_mult, y_mult, width_mult, height_mult);
@@ -10,6 +10,8 @@ class Tank extends GameObject {
 
         this.movementSpeed = canvas.width / 10 / 7;
         this.rotationSpeed = 13;
+
+        this.roundsWon = roundsWon;
 
         this.hp = 3;
 

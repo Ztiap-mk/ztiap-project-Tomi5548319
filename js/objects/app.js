@@ -89,6 +89,21 @@ class App extends Widget {
     }
 
 
+    // Function returns enemy tank
+    getEnemyTank(parent, ignore){
+        for(var node of parent.nodes){
+            if(node instanceof Tank && node !== ignore){
+                return node;
+            }
+            if(node.nodes.length > 0){
+                var found = this.getEnemyTank(node, ignore);
+                if (found !== undefined)
+                    return found;
+            }
+        }
+    }
+
+
     // Initialize application handlers
     start() {
         var app = this;

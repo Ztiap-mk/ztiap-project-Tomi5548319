@@ -10,7 +10,7 @@ function mainMenu(canvas) {
     // Drawables
     var buttonPlay = new ImgButton(canvas, "img/button_play.png", 500, 200, 500, 150);
     buttonPlay.action = function () {
-        app.nodes = round1(app.canvas);
+        app.nodes = round1(app.canvas, 0, 0);
     };
     nodes.push(buttonPlay);
 

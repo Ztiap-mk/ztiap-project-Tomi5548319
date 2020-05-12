@@ -1,5 +1,7 @@
-function round7(canvas) {
+function round7(canvas, roundsWon1, roundsWon2) {
     // TODO make different maps
+    console.log("round 7");
+
     var nodes = [];
 
     // Add in-game music
@@ -40,11 +42,11 @@ function round7(canvas) {
             }
 
             // Wooden boxes
-            if ((i % 3 === 1 && i > 5 && i < 1600 / box_size - 6 && j % 3 === 1) || i <= 3 || i >= 1600 / box_size - 4)
+            if ((i % 3 === 1 && i > 5 && i < 1600 / box_size - 6 && j % 3 === 1) /*|| i <= 3 || i >= 1600 / box_size - 4*/)
                 window.add(new Box(canvas, "wood", i * box_size, j * box_size, box_size, box_size));
         }
 
-    window.nodes = prepareTanks(canvas, window.nodes);
+    window.nodes = prepareTanks(canvas, window.nodes, roundsWon1, roundsWon2);
     nodes.push(window);
 
     return nodes;
