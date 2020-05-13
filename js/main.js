@@ -1,3 +1,10 @@
+/*
+* TODO
+* Fix Box vs Tank collisions
+* Add settings
+* Add game title
+*/
+
 var app;
 
 function loop() {

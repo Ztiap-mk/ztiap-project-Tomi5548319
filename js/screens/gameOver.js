@@ -17,7 +17,7 @@ function gameOver(winner, nodes, canvas) {
 
     var buttonPlayAgain = new ImgButton(canvas, "img/button_playAgain.png", 700, 600, 250, 90);
     buttonPlayAgain.action = function () {
-        app.nodes = round1(app.canvas);
+        app.nodes = round1(app.canvas, 0, 0);
     };
     window.add(buttonPlayAgain);
 

@@ -159,9 +159,6 @@ class Tank extends GameObject {
         this.updateCorners(Math.abs(dt));
     }
 
-    // Tank specific function
-    lose() {}
-
     // Rotation logic
     rotate(dt) {
 
@@ -203,6 +200,9 @@ class Tank extends GameObject {
             app.add(bullet);
         }
     }
+
+    // Tank specific function
+    lose() {}
 
     checkCollision(scene, dt) {
         // Check each object

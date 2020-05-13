@@ -52,10 +52,6 @@ function prepareTanks(canvas, nodes, roundsWon1, roundsWon2) {
 
     nodes.push(tank1);
 
-    // Dash between points indicators
-    var dash = new Text(app.canvas, app.context, 760, 15, 30, "-", "black", 50);
-    nodes.push(dash);
-
 
 
     var tank2 = new Tank(canvas, 1600 - width / 2, 900 - app.windowOffset - height / 1.5, width, height, 90, "img/tank_red.svg", roundsWon2);
@@ -108,6 +104,29 @@ function prepareTanks(canvas, nodes, roundsWon1, roundsWon2) {
     tank2.add(roundsWon);
 
     nodes.push(tank2);
+
+
+
+    // Dash between points indicators
+    var dash = new Text(app.canvas, app.context, 760, 15, 30, "-", "black", 50);
+    nodes.push(dash);
+
+    // Timer
+    var timer = new Timer(app.canvas, app.context, 1400, 15, 200, 50, "black", 0, 30);
+    timer.onEnd = function() {
+        var tank1 = app.getEnemyTank(app, this);
+        var tank2 = app.getEnemyTank(app, tank1);
+
+        // If the timer expires, player with less points gets a point. If its draw, nobody gets points.
+        if(tank1.roundsWon > tank2.roundsWon)
+            tank1.lose();
+        else if(tank2.roundsWon > tank1.roundsWon)
+            tank2.lose();
+        else
+            eval("app.nodes = round" + ((tank1.roundsWon + tank2.roundsWon) % 9 + 1) + "(app.canvas, " + tank1.roundsWon + ", " + tank2.roundsWon + ");");
+
+    };
+    nodes.push(timer);
 
     return nodes;
 }
