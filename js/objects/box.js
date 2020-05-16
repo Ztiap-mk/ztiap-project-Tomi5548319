@@ -33,7 +33,7 @@ class Box extends GameObject {
         switch (this.type) {
             case "iron":
                 if (strength > 1) {
-                    sound = new Sound("sounds/iron_box_broken/edited.mp3", app.volume, 0.3);
+                    sound = new Sound("sounds/iron_box_broken/edited.mp3", app.volume, 1);
                     app.remove(this);
                 } else
                     sound = new Sound("sounds/object_not_broken/edited.mp3", app.volume, 0.3);

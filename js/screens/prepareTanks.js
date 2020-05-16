@@ -4,15 +4,15 @@ function prepareTanks(canvas, nodes, roundsWon1, roundsWon2) {
 
     var tank1 = new Tank(canvas, width / 2, app.windowOffset + height / 1.5, width, height, 270, "img/tank_green.svg", roundsWon1);
     tank1.onkey = function (dt) {
-        if (app.keys["a"] === true)
+        if (app.keys[Settings.player1_left] === true)
             this.rotate(-dt);
-        if (app.keys["d"] === true)
+        if (app.keys[Settings.player1_right] === true)
             this.rotate(dt);
-        if (app.keys["w"] === true)
+        if (app.keys[Settings.player1_forward] === true)
             this.move(dt);
-        if (app.keys["s"] === true)
+        if (app.keys[Settings.player1_backward] === true)
             this.move(-dt);
-        if (app.keys["c"] === true)
+        if (app.keys[Settings.player1_shoot] === true)
             this.shoot();
     };
     tank1.lose = function () {
@@ -25,8 +25,10 @@ function prepareTanks(canvas, nodes, roundsWon1, roundsWon2) {
                     node.lines = node.splitTextIntoLines("" + enemy.roundsWon, app.context);
             app.nodes = gameOver(2, app.nodes, app.canvas);
         }
-        else
+        else {
+            var sound = new Sound("sounds/enemy_destroyed/edited.mp3", app.volume, 0.3);
             eval("app.nodes = round" + ((enemy.roundsWon + this.roundsWon) % 9 + 1) + "(app.canvas, " + this.roundsWon + ", " + enemy.roundsWon + ");");
+        }
 
     };
 
@@ -56,15 +58,15 @@ function prepareTanks(canvas, nodes, roundsWon1, roundsWon2) {
 
     var tank2 = new Tank(canvas, 1600 - width / 2, 900 - app.windowOffset - height / 1.5, width, height, 90, "img/tank_red.svg", roundsWon2);
     tank2.onkey = function (dt) {
-        if (app.keys["ArrowLeft"] === true)
+        if (app.keys[Settings.player2_left] === true)
             this.rotate(-dt);
-        if (app.keys["ArrowRight"] === true)
+        if (app.keys[Settings.player2_right] === true)
             this.rotate(dt);
-        if (app.keys["ArrowUp"] === true)
+        if (app.keys[Settings.player2_forward] === true)
             this.move(dt);
-        if (app.keys["ArrowDown"] === true)
+        if (app.keys[Settings.player2_backward] === true)
             this.move(-dt);
-        if (app.keys["l"] === true)
+        if (app.keys[Settings.player2_shoot] === true)
             this.shoot();
     };
     tank2.lose = function () {
@@ -77,9 +79,10 @@ function prepareTanks(canvas, nodes, roundsWon1, roundsWon2) {
                     node.lines = node.splitTextIntoLines("" + enemy.roundsWon, app.context);
             app.nodes = gameOver(1, app.nodes, app.canvas);
         }
-        else
+        else {
+            var sound = new Sound("sounds/enemy_destroyed/edited.mp3", app.volume, 0.3);
             eval("app.nodes = round" + ((enemy.roundsWon + this.roundsWon) % 9 + 1) + "(app.canvas, " + enemy.roundsWon + ", " + this.roundsWon + ");");
-
+        }
 
     };
 

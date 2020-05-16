@@ -1,5 +1,19 @@
 class Settings {
+    // General settings
     static resolution = "medium";
+
+    // Player controls
+    static player1_forward = "w";
+    static player1_backward = "s";
+    static player1_left = "a";
+    static player1_right = "d";
+    static player1_shoot = "c";
+
+    static player2_forward = "ArrowUp";
+    static player2_backward = "ArrowDown";
+    static player2_left = "ArrowLeft";
+    static player2_right = "ArrowRight";
+    static player2_shoot = "l";
 
     static changeResolution = function(parent, new_size) {
         for (var child of parent.nodes) {

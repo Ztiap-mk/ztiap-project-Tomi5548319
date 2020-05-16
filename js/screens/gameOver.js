@@ -2,6 +2,11 @@ function gameOver(winner, nodes, canvas) {
 
     app.stopMovement(app);
 
+    if(app.music !== undefined)
+        app.music.stop();
+
+    var sound = new Sound("sounds/game_over/400579__alanmcki__retro-arcade-video-game-positive-tone.wav", app.volume, 1);
+
     // Light gray background
     var window = new Window(canvas, 320, 180, 960, 540);
     window.backgroundColor = "#c0c0c0"; // light gray

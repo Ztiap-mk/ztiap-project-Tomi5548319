@@ -14,6 +14,7 @@ class Tank extends GameObject {
         this.roundsWon = roundsWon;
 
         this.hp = 3;
+        this.hasShield = false;
         this.powerups = []; // List of tanks powerups
 
         this.rof = 1000; // Rate of fire
@@ -77,7 +78,6 @@ class Tank extends GameObject {
 
     }
 
-    // TODO remove this
     // Redefine click (tank can be angled)
     click(point) {
 
@@ -128,11 +128,8 @@ class Tank extends GameObject {
 
         clicked = collisions.length === 1 && point.x > min_x && point.x < max_x && point.y > min_y && point.y < max_y;
 
-        if (clicked) {
-            // Call onclick function
-            console.log("clicked");
+        if (clicked)
             this.onclick();
-        }
 
         this.notify("click", point);
     }
@@ -158,6 +155,15 @@ class Tank extends GameObject {
 
         app.collisionCheck(dt);
         this.updateCorners(Math.abs(dt));
+
+        if(this.hasShield === true) {
+            for(var child of this.nodes) {
+                if(child instanceof Shield) {
+                    child.x = this.x;
+                    child.y = this.y;
+                }
+            }
+        }
     }
 
     // Rotation logic
@@ -188,6 +194,15 @@ class Tank extends GameObject {
 
         app.collisionCheck(dt);
         this.updateCorners(Math.abs(dt));
+
+        if(this.hasShield === true) {
+            for(var child of this.nodes) {
+                if(child instanceof Shield) {
+                    child.x = this.x;
+                    child.y = this.y;
+                }
+            }
+        }
     }
 
     shoot() {
@@ -438,7 +453,9 @@ class Tank extends GameObject {
 
                 // shield
                 case 2:
-                    console.log("Shield collected"); // TODO
+                    this.hasShield = true;
+                    var shield = new Shield(app.canvas, 1600 * this.x / app.canvas.width, 900 * this.y / app.canvas.height, 100, 100);
+                    this.add(shield);
                     break;
 
                 // speed
