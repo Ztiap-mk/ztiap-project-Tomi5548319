@@ -1,34 +1,33 @@
 function settings(canvas) {
     var nodes = [];
 
-    // Screen resolution settings
+// Screen resolution settings
     var textScreenSize = new Text(canvas, app.context, 100, 50, 325, "Screen resolution:", "black", 40);
     nodes.push(textScreenSize);
-
 
 
     var textScreenSmall = new Text(canvas, app.context, 500, 50, 105, "Small", "black", 40);
     textScreenSmall.id = "small";
     textScreenSmall.onclick = function(){
-        app.changeResolution(this.id);
-        app.nodes = settings(app.canvas);
+        Settings.changeResolution(app, this.id);
+        app.nodes = settings(app.canvas); // Refresh this screen
     };
 
     var textScreenMedium = new Text(canvas, app.context, 620, 50, 145, "Medium", "black", 40);
     textScreenMedium.id = "medium";
     textScreenMedium.onclick = function(){
-        app.changeResolution(this.id);
-        app.nodes = settings(app.canvas);
+        Settings.changeResolution(app, this.id);
+        app.nodes = settings(app.canvas); // Refresh this screen
     };
 
     var textScreenBig = new Text(canvas, app.context, 780, 50, 60, "Big", "black", 40);
     textScreenBig.id = "big";
     textScreenBig.onclick = function(){
-        app.changeResolution(this.id);
-        app.nodes = settings(app.canvas);
+        Settings.changeResolution(app, this.id);
+        app.nodes = settings(app.canvas); // Refresh this screen
     };
 
-    switch(app.resolution){
+    switch(Settings.resolution){
         case "small":
             textScreenSmall.selected = true;
             break;
