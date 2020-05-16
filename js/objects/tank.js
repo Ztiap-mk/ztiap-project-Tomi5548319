@@ -14,6 +14,7 @@ class Tank extends GameObject {
         this.roundsWon = roundsWon;
 
         this.hp = 3;
+        this.powerups = []; // List of tanks powerups
 
         this.rof = 1000; // Rate of fire
         this.bulletStrength = 1;

@@ -35,13 +35,16 @@ class Box extends GameObject {
                 if (strength > 1) {
                     sound = new Sound("sounds/iron_box_broken/edited.mp3", app.volume, 0.3);
                     app.remove(this);
-                } else {
+                } else
                     sound = new Sound("sounds/object_not_broken/edited.mp3", app.volume, 0.3);
-                }
 
                 break;
             case "wood":
                 sound = new Sound("sounds/wooden_box_broken/edited.mp3", app.volume, 0.3);
+                var powerup = Math.floor((Math.random() * 100) + 1); // 1-100
+                if(powerup <= 50) // 50% chance of dropping a powerup
+                    Powerup.generate(app.canvas, 1600 * this.x / app.canvas.width, 900 * this.y / app.canvas.height, 1600 * this.width / app.canvas.width, 900 * this.height / app.canvas.height);
+
                 app.remove(this);
                 break;
             default:
