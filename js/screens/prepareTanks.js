@@ -25,10 +25,8 @@ function prepareTanks(canvas, nodes, roundsWon1, roundsWon2) {
                     node.lines = node.splitTextIntoLines("" + enemy.roundsWon, app.context);
             app.nodes = gameOver(2, app.nodes, app.canvas);
         }
-        else {
-            var sound = new Sound("sounds/enemy_destroyed/edited.mp3", app.volume, 0.3);
+        else
             eval("app.nodes = round" + ((enemy.roundsWon + this.roundsWon) % 9 + 1) + "(app.canvas, " + this.roundsWon + ", " + enemy.roundsWon + ");");
-        }
 
     };
 
@@ -79,10 +77,8 @@ function prepareTanks(canvas, nodes, roundsWon1, roundsWon2) {
                     node.lines = node.splitTextIntoLines("" + enemy.roundsWon, app.context);
             app.nodes = gameOver(1, app.nodes, app.canvas);
         }
-        else {
-            var sound = new Sound("sounds/enemy_destroyed/edited.mp3", app.volume, 0.3);
+        else
             eval("app.nodes = round" + ((enemy.roundsWon + this.roundsWon) % 9 + 1) + "(app.canvas, " + enemy.roundsWon + ", " + this.roundsWon + ");");
-        }
 
     };
 

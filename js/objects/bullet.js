@@ -161,12 +161,19 @@ class Bullet extends GameObject {
 
     onCollide(obj, dt) {
         if (obj instanceof Tank){
+            var sound;
+
             if(obj.hasShield === true) { // This tank has a shield => destroy it instead of lowering HP
                 obj.hasShield = false;
 
                 for(var child of obj.nodes)
                     if(child instanceof Shield)
                         obj.remove(child);
+
+                var index = obj.powerups.indexOf(2);
+                obj.powerups.splice(index, 1);
+
+                sound = new Sound("sounds/shield_destroyed/320549__debsound__pop-19.wav", app.volume, 0.5);
             } else { // This tank doesn't have a shield => lower his HP
                 for(var hp of obj.nodes)
                     if(hp instanceof Hp && hp.id === obj.hp)
@@ -176,9 +183,10 @@ class Bullet extends GameObject {
 
                 if(obj.hp === 0){
                     obj.lose();
+                    sound = new Sound("sounds/enemy_destroyed/edited.mp3", app.volume, 0.3);
 
                 } else {
-                    var sound = new Sound("sounds/damage_caused/edited.mp3", app.volume, 1);
+                    sound = new Sound("sounds/damage_caused/edited.mp3", app.volume, 1);
                 }
             }
 
