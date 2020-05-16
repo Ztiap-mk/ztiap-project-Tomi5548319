@@ -9,12 +9,10 @@ class ImgButton extends GameObject {
 
     // Redefine ondraw function
     ondraw(context) {
-        var button = this;
-
         var img = new Image();
-        img.src = button.imgSrc;
+        img.src = this.imgSrc;
 
-        context.drawImage(img, button.x, button.y, button.width, button.height);
+        context.drawImage(img, this.x, this.y, this.width, this.height);
     }
 
     // Redefine onclick function
@@ -24,6 +22,5 @@ class ImgButton extends GameObject {
 
 
     // By default do nothing
-    action() {
-    }
+    action() {}
 }

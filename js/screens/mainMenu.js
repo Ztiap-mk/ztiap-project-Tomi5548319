@@ -8,6 +8,9 @@ function mainMenu(canvas) {
     app.music.sound.loop = true;
 
     // Drawables
+    var title = new AnimatedImage(app.canvas, 400, 25, 700, 150, "img/title.png", 776, 102, 6, 150);
+    nodes.push(title);
+
     var buttonPlay = new ImgButton(canvas, "img/button_play.png", 500, 200, 500, 150);
     buttonPlay.action = function () {
         app.nodes = round1(app.canvas, 0, 0);
