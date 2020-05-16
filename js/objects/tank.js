@@ -202,7 +202,7 @@ class Tank extends GameObject {
         }
     }
 
-    // Tank specific function
+    // Tank specific function, should be defined when a tank is created (prepareTanks.js)
     lose() {}
 
     checkCollision(scene, dt) {
@@ -212,14 +212,23 @@ class Tank extends GameObject {
             // Object is not physical
             if (!obj.physical || obj === this) continue;
             var collisions;
+
             if (obj instanceof Tank) {
                 collisions = this.checkTankCollision(obj);
                 if (collisions.length)
                     this.onCollide(obj, dt); // Tanks collided
                 continue;
             }
+
             if (obj instanceof Box) {
                 collisions = this.checkBoxCollision(obj);
+
+                if (collisions.length)
+                    this.onCollide(obj, dt);
+            }
+
+            if (obj instanceof Powerup) {
+                collisions = this.checkPowerupCollision(obj);
 
                 if (collisions.length)
                     this.onCollide(obj, dt);
@@ -228,6 +237,64 @@ class Tank extends GameObject {
     }
 
     checkBoxCollision(object) {
+
+        var collisions = [];
+
+        // Check collision of 4 lines (tanks sides) with objects sides
+        for (var i = 0; i < 4; i++) {
+            // Tank side
+            var line1 = {
+                x1: this.corners[i].x,
+                y1: this.corners[i].y,
+                x2: this.corners[(i + 1) % 4].x,
+                y2: this.corners[(i + 1) % 4].y
+            };
+
+            // TOP SIDE
+            var line2 = {
+                x1: object.x,
+                y1: object.y,
+                x2: object.x + object.width,
+                y2: object.y
+            };
+            if (linesCollide(line1, line2))
+                collisions.push(1);
+
+            // RIGHT SIDE
+            line2 = {
+                x1: object.x + object.width,
+                y1: object.y,
+                x2: object.x + object.width,
+                y2: object.y + object.height
+            };
+            if (linesCollide(line1, line2))
+                collisions.push(2);
+
+            // BOTTOM SIDE
+            line2 = {
+                x1: object.x + object.width,
+                y1: object.y + object.height,
+                x2: object.x,
+                y2: object.y + object.height
+            };
+            if (linesCollide(line1, line2))
+                collisions.push(3);
+
+            // LEFT SIDE
+            line2 = {
+                x1: object.x,
+                y1: object.y + object.height,
+                x2: object.x,
+                y2: object.y
+            };
+            if (linesCollide(line1, line2))
+                collisions.push(4);
+        }
+
+        return collisions;
+    }
+
+    checkPowerupCollision(object) {
 
         var collisions = [];
 
@@ -343,6 +410,46 @@ class Tank extends GameObject {
     }
 
     onCollide(obj, dt) {
+        if(obj instanceof Powerup) {
+            for(var powerup of this.powerups)
+                if(powerup === obj.type){ // Tank already has this powerup
+                    app.remove(obj);
+                    return;
+                }
+
+            // Tank doesn't have this powerup
+            this.powerups.push(obj.type); // Save this powerup
+            switch(obj.type) {
+                // ammo
+                case 0:
+                    this.bulletStrength++;
+                    for(var node of this.nodes)
+                        if(node instanceof Ammo)
+                            if(node.id <= this.bulletStrength)
+                                node.src = "img/ammo_full.svg";
+                            else
+                                node.src = "img/ammo_empty.svg";
+                    break;
+
+                // laser
+                case 1:
+                    console.log("Laser collected"); // TODO
+                    break;
+
+                // shield
+                case 2:
+                    console.log("Shield collected"); // TODO
+                    break;
+
+                // speed
+                case 3:
+                    this.movementSpeed *= 1.3;
+            }
+
+            app.remove(obj);
+        }
+
+        // This won't happen to powerups
         this.x = this.llast_x;
         this.y = this.llast_y;
         this.dx = this.llast_dx;

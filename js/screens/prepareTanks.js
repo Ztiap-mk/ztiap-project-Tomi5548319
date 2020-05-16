@@ -93,11 +93,11 @@ function prepareTanks(canvas, nodes, roundsWon1, roundsWon2) {
 
     // Bullet strength indicators
     ammo = new Ammo(1, app.canvas, 1470, 850, 50, 50);
-    tank1.add(ammo);
+    tank2.add(ammo);
     ammo = new Ammo(2, app.canvas, 1510, 850, 50, 50);
-    tank1.add(ammo);
+    tank2.add(ammo);
     ammo = new Ammo(3, app.canvas, 1550, 850, 50, 50);
-    tank1.add(ammo);
+    tank2.add(ammo);
 
     // Rounds won indicator
     roundsWon = new Text(app.canvas, app.context, 800, 15, 50, "" + roundsWon2, "red", 50);
