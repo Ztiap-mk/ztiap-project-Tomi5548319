@@ -1,10 +1,10 @@
 class Sound {
-    constructor(src, generalVolume, volumeMultiplier) {
+    constructor(src, soundSettings, volumeMultiplier) {
         this.sound = document.createElement("audio");
         this.sound.src = src;
 
         this.volumeMultiplier = volumeMultiplier;
-        this.volume = generalVolume * this.volumeMultiplier; // won't be set to 0 when muted
+        this.volume = soundSettings.volume * this.volumeMultiplier; // won't be set to 0 when muted
         this.sound.volume = this.volume; // will be set to 0 when muted
 
         this.sound.setAttribute("preload", "auto");
@@ -13,11 +13,8 @@ class Sound {
 
         document.body.appendChild(this.sound);
 
-        if (app.muted)
+        if (soundSettings.muted === true)
             this.changeVolume(0);
-        else{
-            this.changeVolume(app.volume);
-        }
 
         this.play();
     }

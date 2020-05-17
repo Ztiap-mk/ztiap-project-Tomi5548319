@@ -4,10 +4,9 @@ function mainMenu(canvas) {
     // Start the music
     if(app.music !== undefined)
         app.music.stop();
-    app.music = new Sound("sounds/home_screen_loop/Two Steps From Hell - To Glory.mp3", app.volume, 0.5);
+    app.music = new Sound("sounds/home_screen_loop/Two Steps From Hell - To Glory.mp3", Settings.music, 0.5);
     app.music.sound.loop = true;
 
-    // Drawables
     var title = new AnimatedImage(app.canvas, 400, 25, 700, 150, "img/title.png", 776, 102, 6, 150);
     nodes.push(title);
 
@@ -29,28 +28,49 @@ function mainMenu(canvas) {
     };
     nodes.push(buttonAbout);
 
+    // Sound controls
+
     var soundSrc = "";
-    if (app.muted)
+    if (Settings.sound.muted === true)
         soundSrc = "img/sound_off.svg";
     else
         soundSrc = "img/sound_on.svg";
 
-    var buttonSound = new ImgButton(canvas, soundSrc, 1510, 10, 80, 45);
+    var buttonSound = new ImgButton(canvas, soundSrc, 1420, 10, 80, 45);
     buttonSound.action = function () {
-        console.log("Sound clicked");
-        if (app.muted) {
+        if (Settings.sound.muted === true) {
             this.imgSrc = "img/sound_on.svg";
+            Settings.sound.muted = false;
 
-            app.music.changeVolume(app.volume); // resume the volume
-            app.muted = false;
         } else {
             this.imgSrc = "img/sound_off.svg";
+            Settings.sound.muted = true;
 
-            app.music.changeVolume(0); // mute
-            app.muted = true;
         }
     };
     nodes.push(buttonSound);
+
+    var musicSrc = "";
+    if (Settings.music.muted === true)
+        musicSrc = "img/music_off.svg";
+    else
+        musicSrc = "img/music_on.svg";
+
+    var buttonMusic = new ImgButton(canvas, musicSrc, 1510, 10, 80, 45);
+    buttonMusic.action = function () {
+        if (Settings.music.muted === true) {
+            this.imgSrc = "img/music_on.svg";
+
+            app.music.changeVolume(Settings.music.volume); // resume the volume
+            Settings.music.muted = false;
+        } else {
+            this.imgSrc = "img/music_off.svg";
+
+            app.music.changeVolume(0); // mute
+            Settings.music.muted = true;
+        }
+    };
+    nodes.push(buttonMusic);
 
     return nodes;
 }

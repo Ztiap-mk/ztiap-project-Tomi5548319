@@ -11,9 +11,6 @@ class App extends Widget {
         this.keys = [];
         this.music;
 
-        this.volume = 0.5;
-        this.muted = true;
-
         this.windowOffset = 100; // Offset of the in-game window
 
         this.time = Date.now();

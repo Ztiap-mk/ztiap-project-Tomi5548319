@@ -467,9 +467,9 @@ class Tank extends GameObject {
 
             // Make a sound based on the powerup
             if(obj.type === 1)
-                var sound = new Sound("sounds/powerup_laser/339169__debsound__arcade-laser-014.wav", app.volume, 1);
+                var sound = new Sound("sounds/powerup_laser/339169__debsound__arcade-laser-014.wav", Settings.sound, 1);
             else
-                var sound = new Sound("sounds/powerup_general/138485__justinvoke__powerup.wav", app.volume, 0.3);
+                var sound = new Sound("sounds/powerup_general/138485__justinvoke__powerup.wav", Settings.sound, 0.3);
 
             app.remove(obj);
         }

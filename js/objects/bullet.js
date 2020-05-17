@@ -9,7 +9,7 @@ class Bullet extends GameObject {
 
         this.movementSpeed = canvas.width / 10 / 3;
 
-        var sound = new Sound("sounds/shooting/edited.mp3", app.volume, 0.3);
+        var sound = new Sound("sounds/shooting/edited.mp3", Settings.sound, 0.3);
 
         this.dx = dx;
         this.dy = dy;
@@ -80,7 +80,7 @@ class Bullet extends GameObject {
             if (obj instanceof Window) {
                 if (this.x - this.width / 2 < obj.x || this.x + this.width / 2 > obj.x + obj.width ||
                     this.y - this.height / 2 < obj.y || this.y + this.height / 2 > obj.y + obj.height) {
-                    var sound = new Sound("sounds/object_not_broken/edited.mp3", app.volume, 0.3);
+                    var sound = new Sound("sounds/object_not_broken/edited.mp3", Settings.sound, 0.3);
                     app.remove(this);
                 }
             }
@@ -173,7 +173,7 @@ class Bullet extends GameObject {
                 var index = obj.powerups.indexOf(2);
                 obj.powerups.splice(index, 1);
 
-                sound = new Sound("sounds/shield_destroyed/320549__debsound__pop-19.wav", app.volume, 0.5);
+                sound = new Sound("sounds/shield_destroyed/320549__debsound__pop-19.wav", Settings.sound, 0.5);
             } else { // This tank doesn't have a shield => lower his HP
                 for(var hp of obj.nodes)
                     if(hp instanceof Hp && hp.id === obj.hp)
@@ -183,10 +183,10 @@ class Bullet extends GameObject {
 
                 if(obj.hp === 0){
                     obj.lose();
-                    sound = new Sound("sounds/enemy_destroyed/edited.mp3", app.volume, 0.3);
+                    sound = new Sound("sounds/enemy_destroyed/edited.mp3", Settings.sound, 0.3);
 
                 } else {
-                    sound = new Sound("sounds/damage_caused/edited.mp3", app.volume, 1);
+                    sound = new Sound("sounds/damage_caused/edited.mp3", Settings.sound, 1);
                 }
             }
 

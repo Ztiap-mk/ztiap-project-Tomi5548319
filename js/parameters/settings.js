@@ -2,6 +2,16 @@ class Settings {
     // General settings
     static resolution = "medium";
 
+    static sound = {
+        muted: true,
+        volume: 0.3
+    }
+
+    static music = {
+        muted: true,
+        volume: 0.3
+    }
+
     // Player controls
     static player1_forward = "w";
     static player1_backward = "s";

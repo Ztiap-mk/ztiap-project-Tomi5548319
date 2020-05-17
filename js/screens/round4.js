@@ -6,7 +6,7 @@ function round4(canvas, roundsWon1, roundsWon2) {
 
     // Add in-game music
     app.music.stop();
-    app.music = new Sound("sounds/game_loop/417491__centurion-of-war__millitary-46.wav", app.volume, 0.3);
+    app.music = new Sound("sounds/game_loop/417491__centurion-of-war__millitary-46.wav", Settings.music, 0.3);
     app.music.sound.loop = true;
 
     var window = new Window(canvas, 0, 100, 1600, 700);
