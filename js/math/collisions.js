@@ -1,19 +1,21 @@
 function linesCollide(line1, line2) {
 
     // Draw the lines
-    /*var context = app.context;
+    if(Settings.showHitboxes === true) {
+        var context = app.context;
 
-    context.strokeStyle = "red";
+        context.strokeStyle = "red";
 
-    context.beginPath();
-    context.moveTo(line1.x1, line1.y1);
-    context.lineTo(line1.x2, line1.y2);
-    context.stroke();
+        context.beginPath();
+        context.moveTo(line1.x1, line1.y1);
+        context.lineTo(line1.x2, line1.y2);
+        context.stroke();
 
-    context.beginPath();
-    context.moveTo(line2.x1, line2.y1);
-    context.lineTo(line2.x2, line2.y2);
-    context.stroke();*/
+        context.beginPath();
+        context.moveTo(line2.x1, line2.y1);
+        context.lineTo(line2.x2, line2.y2);
+        context.stroke();
+    }
 
     // Normal vector
     var n1 = {

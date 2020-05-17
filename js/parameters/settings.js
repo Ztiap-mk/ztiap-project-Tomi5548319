@@ -1,4 +1,7 @@
 class Settings {
+    // Hidden settings
+    static showHitboxes = false;
+
     // General settings
     static resolution = "medium";
 

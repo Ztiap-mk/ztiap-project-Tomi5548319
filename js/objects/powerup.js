@@ -6,10 +6,10 @@ class Powerup extends GameObject {
 
         /* Powerup types:
         -1 -> undefined
-        0 -> ammo (30% chance)
-        1 -> laser (10% chance)
-        2 -> shield (30% chance)
-        3 -> speed (30% chance)
+        0 -> ammo (33% chance)
+        1 -> laser (1% chance)
+        2 -> shield (33% chance)
+        3 -> speed (33% chance)
         */
         this.type = -1;
         this.src = "";
@@ -31,17 +31,17 @@ class Powerup extends GameObject {
         // Generate a random powerup
         var rand = Math.floor((Math.random() * 100) + 1);
 
-        if(rand <= 30){ // ammo
+        if(rand <= 33){ // ammo
             powerup.type = 0;
             powerup.src = "img/powerup_ammo.svg"
         }
 
-        else if(rand <= 40){ // laser
+        else if(rand <= 34){ // laser
             powerup.type = 1;
             powerup.src = "img/powerup_laser.svg"
         }
 
-        else if(rand <= 70){ // shield
+        else if(rand <= 67){ // shield
             powerup.type = 2;
             powerup.src = "img/powerup_shield.svg"
         }

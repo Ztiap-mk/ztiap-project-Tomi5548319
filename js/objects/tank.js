@@ -206,14 +206,23 @@ class Tank extends GameObject {
     }
 
     shoot() {
-        var time = Date.now();
-        if(time - this.lastShot > this.rof){ // Tank is allowed to shoot
-            this.lastShot = time;
 
-            var bullet = new Bullet(app.canvas, (1600 * this.x) / app.canvas.width + this.dx * 50,
-                (900 * this.y) / app.canvas.height + this.dy * 50, 15, 15, this.dx, this.dy, this.bulletStrength);
+        if(this.bulletStrength === 3) { // Laser gun
+            var laser = new Laser(app.canvas, (1600 * this.x) / app.canvas.width + this.dx * 50,
+                (900 * this.y) / app.canvas.height + this.dy * 50, this.dx, this.dy);
+            app.add(laser);
+        }
+        else { // Standard gun
+            var time = Date.now();
 
-            app.add(bullet);
+            if(time - this.lastShot > this.rof){ // Tank is allowed to shoot
+                this.lastShot = time;
+
+                var bullet = new Bullet(app.canvas, (1600 * this.x) / app.canvas.width + this.dx * 50,
+                    (900 * this.y) / app.canvas.height + this.dy * 50, 15, 15, this.dx, this.dy, this.bulletStrength);
+
+                app.add(bullet);
+            }
         }
     }
 
@@ -437,7 +446,7 @@ class Tank extends GameObject {
             switch(obj.type) {
                 // ammo
                 case 0:
-                    this.bulletStrength++;
+                    this.bulletStrength = 2;
                     for(var node of this.nodes)
                         if(node instanceof Ammo)
                             if(node.id <= this.bulletStrength)
@@ -449,7 +458,11 @@ class Tank extends GameObject {
 
                 // laser
                 case 1:
-                    console.log("Laser collected"); // TODO
+                    this.bulletStrength = 3;
+                    for(var child of this.nodes)
+                        if(child instanceof Ammo)
+                            child.src = "img/ammo_laser.svg";
+
                     break;
 
                 // shield

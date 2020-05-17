@@ -100,7 +100,7 @@ class Bullet extends GameObject {
                 y2: obj.corners[(i + 1) % 4].y
             };
 
-            // outside of canvas and other side of click
+            // outside of canvas and bullet center
             var line2 = {
                 x1: -1,
                 y1: -1,
@@ -192,6 +192,7 @@ class Bullet extends GameObject {
 
             app.remove(this);
         }
+
         if (obj instanceof Box) {
             obj.break(this.strength);
             app.remove(this);

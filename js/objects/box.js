@@ -48,7 +48,10 @@ class Box extends GameObject {
                 app.remove(this);
                 break;
             default:
-                sound = new Sound("sounds/object_not_broken/edited.mp3", Settings.sound, 0.3);
+                if (strength > 2) // Laser
+                    app.remove(this);
+                else
+                    sound = new Sound("sounds/object_not_broken/edited.mp3", Settings.sound, 0.3);
         }
     }
 }
