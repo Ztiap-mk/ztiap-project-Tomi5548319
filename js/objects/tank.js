@@ -446,13 +446,16 @@ class Tank extends GameObject {
             switch(obj.type) {
                 // ammo
                 case 0:
-                    this.bulletStrength = 2;
-                    for(var node of this.nodes)
-                        if(node instanceof Ammo)
-                            if(node.id <= this.bulletStrength)
-                                node.src = "img/ammo_full.svg";
-                            else
-                                node.src = "img/ammo_empty.svg";
+                    if(this.bulletStrength < 2) {
+                        this.bulletStrength = 2;
+                        for(var node of this.nodes)
+                            if(node instanceof Ammo)
+                                if(node.id <= this.bulletStrength)
+                                    node.src = "img/ammo_full.svg";
+                                else
+                                    node.src = "img/ammo_empty.svg";
+                    }
+
 
                     break;
 

@@ -111,7 +111,7 @@ function prepareTanks(canvas, nodes, roundsWon1, roundsWon2) {
     nodes.push(dash);
 
     // Timer
-    var timer = new Timer(app.canvas, app.context, 1400, 15, 200, 50, "black", 0, 30);
+    var timer = new Timer(app.canvas, app.context, 1400, 15, 200, 50, "black", 1, 30);
     timer.onEnd = function() {
         var tank1 = app.getEnemyTank(app, this);
         var tank2 = app.getEnemyTank(app, tank1);

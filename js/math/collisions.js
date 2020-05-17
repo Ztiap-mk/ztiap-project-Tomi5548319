@@ -1,9 +1,15 @@
 function linesCollide(line1, line2) {
 
+    if(line2.y1 === line2.y2) { // Line is vertical
+        var h = line1;
+        line1 = line2;
+        line2 = h;
+    }
+
+    var context = app.context;
+
     // Draw the lines
     if(Settings.showHitboxes === true) {
-        var context = app.context;
-
         context.strokeStyle = "red";
 
         context.beginPath();
@@ -17,18 +23,19 @@ function linesCollide(line1, line2) {
         context.stroke();
     }
 
-    // Normal vector
+    // Normal vector of line 1
     var n1 = {
         x: -(line1.y1 - line1.y2),
         y: line1.x1 - line1.x2
     };
 
-    // Normal vector
+    // Normal vector of line 2
     var n2 = {
         x: -(line2.y1 - line2.y2),
         y: line2.x1 - line2.x2
     };
 
+    // Line 1 equation
     // ax + by + c = 0
     // => c = -(ax + by)
     // => y = (-(ax + c))/b
@@ -38,6 +45,7 @@ function linesCollide(line1, line2) {
         c: -(n1.x * line1.x1 + n1.y * line1.y1)
     };
 
+    // Line 2 equation
     // ax + by + c = 0
     // => c = -(ax + by)
     // => y = (-(ax + c))/b
@@ -75,8 +83,17 @@ function linesCollide(line1, line2) {
         var e = eqn2.b;
         var f = eqn2.c;
 
+        // Collision point coordinates
         var x = (-(e * (-c) / b + f)) / (d - e * a / b);
         var y = (-(a * x + c)) / b;
+
+        /* For debugging purposes only
+        context.fillStyle = "red";
+        context.beginPath();
+        context.arc(x, y, 5, 0, Math.PI * 2);
+        context.closePath();
+        context.fill();
+         */
 
         if (line1.x1 < line1.x2)
             if (line2.x1 < line2.x2)

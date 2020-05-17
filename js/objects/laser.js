@@ -85,7 +85,7 @@ class Laser extends GameObject {
         // Check collision of 4 lines (box sides) with laser
 
         // Laser
-        var line2 = {
+        var line1 = {
             x1: this.x,
             y1: this.y,
             x2: this.x2,
@@ -93,7 +93,7 @@ class Laser extends GameObject {
         };
 
         // Box left side
-        var line1 = {
+        var line2 = {
             x1: obj.x,
             y1: obj.y,
             x2: obj.x,
@@ -103,7 +103,7 @@ class Laser extends GameObject {
             return true;
 
         // Box top side
-        line1 = {
+        line2 = {
             x1: obj.x,
             y1: obj.y,
             x2: obj.x + obj.width,
@@ -113,7 +113,7 @@ class Laser extends GameObject {
             return true;
 
         // Box right side
-        line1 = {
+        line2 = {
             x1: obj.x + obj.width,
             y1: obj.y,
             x2: obj.x + obj.width,
@@ -123,7 +123,7 @@ class Laser extends GameObject {
             return true;
 
         // Box bottom side
-        line1 = {
+        line2 = {
             x1: obj.x,
             y1: obj.y + obj.height,
             x2: obj.x + obj.width,

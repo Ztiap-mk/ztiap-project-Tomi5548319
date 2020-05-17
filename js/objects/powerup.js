@@ -36,7 +36,7 @@ class Powerup extends GameObject {
             powerup.src = "img/powerup_ammo.svg"
         }
 
-        else if(rand <= 34){ // laser
+        else if(rand <= 66){ // laser
             powerup.type = 1;
             powerup.src = "img/powerup_laser.svg"
         }
