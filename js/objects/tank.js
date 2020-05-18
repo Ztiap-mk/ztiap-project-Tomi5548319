@@ -231,7 +231,7 @@ class Tank extends GameObject {
         }
     }
 
-    // Tank specific function, should be defined when a tank is created (prepareTanks.js)
+    // Tank specific function, should be defined when a tank is created (prepareRound.js)
     lose() {}
 
     checkCollision(scene, dt) {

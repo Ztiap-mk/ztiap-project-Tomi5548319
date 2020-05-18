@@ -28,15 +28,15 @@ function mainMenu(canvas) {
     };
     nodes.push(buttonAbout);
 
-    // Sound controls
 
+    // Sound controls
     var soundSrc = "";
     if (Settings.sound.muted === true)
         soundSrc = "img/sound_off.svg";
     else
         soundSrc = "img/sound_on.svg";
 
-    var buttonSound = new ImgButton(canvas, soundSrc, 1420, 10, 80, 45);
+    var buttonSound = new ImgButton(canvas, soundSrc, 1250, 50, 150, 80);
     buttonSound.action = function () {
         if (Settings.sound.muted === true) {
             this.imgSrc = "img/sound_on.svg";
@@ -56,7 +56,7 @@ function mainMenu(canvas) {
     else
         musicSrc = "img/music_on.svg";
 
-    var buttonMusic = new ImgButton(canvas, musicSrc, 1510, 10, 80, 45);
+    var buttonMusic = new ImgButton(canvas, musicSrc, 1400, 50, 150, 80);
     buttonMusic.action = function () {
         if (Settings.music.muted === true) {
             this.imgSrc = "img/music_on.svg";

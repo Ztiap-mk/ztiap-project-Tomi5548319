@@ -2,15 +2,7 @@ function round1(canvas, roundsWon1, roundsWon2) {
     console.log("round 1");
 
     var nodes = [];
-
-    // Add in-game music
-    app.music.stop();
-    app.music = new Sound("sounds/game_loop/417491__centurion-of-war__millitary-46.wav", Settings.music, 0.3);
-    app.music.sound.loop = true;
-
-    var window = new Window(canvas, 0, 100, 1600, 700);
-    window.backgroundColor = "#c0c0c0"; // light gray
-    window.physical = true;
+    var window = prepareRound(canvas, roundsWon1, roundsWon2);
 
     var box_size = 50;
 
@@ -41,8 +33,6 @@ function round1(canvas, roundsWon1, roundsWon2) {
 
         }
 
-    window.nodes = prepareTanks(canvas, window.nodes, roundsWon1, roundsWon2);
     nodes.push(window);
-
     return nodes;
 }

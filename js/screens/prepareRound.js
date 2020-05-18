@@ -1,4 +1,44 @@
-function prepareTanks(canvas, nodes, roundsWon1, roundsWon2) {
+// Same in every round
+function prepareRound(canvas, roundsWon1, roundsWon2) {
+
+    // In-game music
+    app.music.stop();
+    app.music = new Sound("sounds/game_loop/417491__centurion-of-war__millitary-46.wav", Settings.music, 0.3);
+    app.music.sound.loop = true;
+
+    var window = new Window(canvas, 0, 100, 1600, 700);
+    window.backgroundColor = "#c0c0c0"; // light gray
+    window.physical = true;
+    window.onkey = function (dt) {
+        if (app.keys["Escape"] === true || app.keys["p"] === true) {
+            if (Settings.gamePaused === false) {
+                app.add(pause(app.canvas));
+                Settings.gamePaused = true;
+            }
+            else {
+                for (var child of app.nodes)
+                    if(child instanceof Window && child.id === "pause")
+                        app.remove(child);
+
+                Settings.gamePaused = false;
+            }
+
+
+            app.keys["Escape"] = false;
+            app.keys["p"] = false;
+        }
+    };
+
+    var pauseImg = new ImgButton(canvas, "img/pause.svg", 1520, 20, 50, 50);
+    pauseImg.action = function () {
+        if(Settings.gamePaused === false) {
+            app.add(pause(app.canvas));
+            Settings.gamePaused = true;
+        }
+    };
+    window.add(pauseImg);
+
+    // Tank sizes
     var width = 75;
     var height = 50;
 
@@ -50,7 +90,7 @@ function prepareTanks(canvas, nodes, roundsWon1, roundsWon2) {
     var roundsWon = new Text(app.canvas, app.context, 700, 15, 50, "" + roundsWon1, "green", 50);
     tank1.add(roundsWon);
 
-    nodes.push(tank1);
+    window.add(tank1);
 
 
 
@@ -102,16 +142,16 @@ function prepareTanks(canvas, nodes, roundsWon1, roundsWon2) {
     roundsWon = new Text(app.canvas, app.context, 800, 15, 50, "" + roundsWon2, "red", 50);
     tank2.add(roundsWon);
 
-    nodes.push(tank2);
+    window.add(tank2);
 
 
 
     // Dash between points indicators
     var dash = new Text(app.canvas, app.context, 760, 15, 30, "-", "black", 50);
-    nodes.push(dash);
+    window.add(dash);
 
     // Timer
-    var timer = new Timer(app.canvas, app.context, 1400, 15, 200, 50, "black", 1, 30);
+    var timer = new Timer(app.canvas, app.context, 1350, 15, 200, 50, "black", 1, 30);
     timer.onEnd = function() {
         var tank1 = app.getEnemyTank(app, this);
         var tank2 = app.getEnemyTank(app, tank1);
@@ -125,7 +165,7 @@ function prepareTanks(canvas, nodes, roundsWon1, roundsWon2) {
             eval("app.nodes = round" + ((tank1.roundsWon + tank2.roundsWon) % 9 + 1) + "(app.canvas, " + tank1.roundsWon + ", " + tank2.roundsWon + ");");
 
     };
-    nodes.push(timer);
+    window.add(timer);
 
-    return nodes;
+    return window;
 }

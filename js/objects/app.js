@@ -75,6 +75,7 @@ class App extends Widget {
         window.onkeydown = function (event) {
 
             app.keys[event.key] = true;
+            console.log(event.key);
 
         };
 
