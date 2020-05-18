@@ -48,6 +48,18 @@ class Widget extends Node {
         // Send key message to observers
         this.notify("keyCheck", dt);
     }
+    keyDown(key) {
+        this.onkeyDown(key);
+
+        // Send keyDown message to observers
+        this.notify("keyDown", key);
+    }
+    keyUp(key) {
+        this.onkeyUp(key);
+
+        // Send keyDown message to observers
+        this.notify("keyUp", key);
+    }
 
     collisionCheck(dt) {
         if (this.physical)
@@ -67,6 +79,8 @@ class Widget extends Node {
     ondraw(context) {}
     onclick() {}
     onkey(dt) {}
+    onkeyDown(key) {}
+    onkeyUp(key) {}
     checkCollision(scene) {}
     onUpdate(dt) {}
 }

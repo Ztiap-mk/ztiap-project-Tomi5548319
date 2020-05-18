@@ -75,7 +75,7 @@ class App extends Widget {
         window.onkeydown = function (event) {
 
             app.keys[event.key] = true;
-            console.log(event.key);
+            app.keyDown(event.key);
 
         };
 
@@ -83,6 +83,7 @@ class App extends Widget {
         window.onkeyup = function (event) {
 
             app.keys[event.key] = false;
+            app.keyUp(event.key);
 
         };
 

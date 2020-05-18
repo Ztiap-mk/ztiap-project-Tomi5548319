@@ -9,8 +9,8 @@ function prepareRound(canvas, roundsWon1, roundsWon2) {
     var window = new Window(canvas, 0, 100, 1600, 700);
     window.backgroundColor = "#c0c0c0"; // light gray
     window.physical = true;
-    window.onkey = function (dt) {
-        if (app.keys["Escape"] === true || app.keys["p"] === true) {
+    window.onkeyDown = function (key) {
+        if (key === "Escape" || key === "p") {
             if (Settings.gamePaused === false) {
                 app.add(pause(app.canvas));
                 Settings.gamePaused = true;
@@ -22,10 +22,6 @@ function prepareRound(canvas, roundsWon1, roundsWon2) {
 
                 Settings.gamePaused = false;
             }
-
-
-            app.keys["Escape"] = false;
-            app.keys["p"] = false;
         }
     };
 
