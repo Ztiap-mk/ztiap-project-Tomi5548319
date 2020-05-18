@@ -42,23 +42,6 @@ class App extends Widget {
     }
 
 
-    stopMovement(node) {
-        // disable objects onclick(), onkey() and onUpdate() => they will stop moving
-        for (var obj of node.nodes) {
-            if (obj instanceof Tank) {
-                obj.onclick = function () {};
-                obj.onkey = function () {};
-            } else if (obj instanceof Bullet) {
-                obj.move = function () {};
-            } else if (obj instanceof Timer) {
-                obj.onUpdate = function() {};
-            }
-
-            if (obj.nodes.length > 0) app.stopMovement(obj); // Object contains objects inside
-        }
-    }
-
-
     // Function returns enemy tank
     getEnemyTank(parent, ignore){
         for(var node of parent.nodes){

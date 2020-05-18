@@ -1,6 +1,7 @@
 class Settings {
     // Hidden settings
     static showHitboxes = false;
+    static gamePaused = false;
 
     // General settings
     static resolution = "medium";

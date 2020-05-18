@@ -20,38 +20,41 @@ class Timer extends GameObject {
 
     // Update the timer
     onUpdate(dt) {
-        var now = Date.now();
+        if(Settings.gamePaused === false) {
+            var now = Date.now();
 
-        if(now - this.lastUpdate > 1000){ // update only every second
-            this.lastUpdate = now;
-            this.timeLeft--;
+            if(now - this.lastUpdate > 1000){ // update only every second
+                this.lastUpdate = now;
+                this.timeLeft--;
 
-            if(this.minutes > 0 || this.seconds > 0)
-                this.seconds--;
+                if(this.minutes > 0 || this.seconds > 0)
+                    this.seconds--;
 
-            if(this.seconds < 0 && this.minutes > 0) {
-                this.minutes--;
-                this.seconds += 60;
+                if(this.seconds < 0 && this.minutes > 0) {
+                    this.minutes--;
+                    this.seconds += 60;
+                }
+
+                if(this.minutes === 0 && this.seconds === 0 && !this.ended){
+                    this.onEnd();
+                    this.ended = true;
+                }
+
+                this.updateTime();
+
+                var text = this.nodes[0];
+                if(text instanceof Text) { // Just to be sure
+                    text.lines = [];
+                    text.lines.push(this.textStr);
+                }
+
+                // Use for debugging only
+                // console.log("Time left: " + this.minutes + ":" + this.seconds);
             }
-
-            if(this.minutes === 0 && this.seconds === 0 && !this.ended){
-                this.onEnd();
-                this.ended = true;
-            }
-
-            this.updateTime();
-
-            var text = this.nodes[0];
-            if(text instanceof Text) { // Just to be sure
-                text.lines = [];
-                text.lines.push(this.textStr);
-            }
-
-            // Use for debugging only
-            // console.log("Time left: " + this.minutes + ":" + this.seconds);
         }
     }
 
+    // Creates a string from minutes and seconds left
     updateTime() {
         this.textStr = "";
         if(this.minutes < 10)

@@ -1,6 +1,7 @@
 function gameOver(winner, nodes, canvas) {
 
-    app.stopMovement(app);
+    //app.stopMovement(app);
+    Settings.gamePaused = true;
 
     if(app.music !== undefined)
         app.music.stop();
@@ -16,12 +17,14 @@ function gameOver(winner, nodes, canvas) {
 
     var buttonReturnToMainMenu = new ImgButton(canvas, "img/button_returnToMainMenu.png", 370, 600, 250, 90);
     buttonReturnToMainMenu.action = function () {
+        Settings.gamePaused = false;
         app.nodes = mainMenu(app.canvas);
     };
     window.add(buttonReturnToMainMenu);
 
     var buttonPlayAgain = new ImgButton(canvas, "img/button_playAgain.png", 700, 600, 250, 90);
     buttonPlayAgain.action = function () {
+        Settings.gamePaused = false;
         app.nodes = round1(app.canvas, 0, 0);
     };
     window.add(buttonPlayAgain);

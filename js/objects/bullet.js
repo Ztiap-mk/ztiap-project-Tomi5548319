@@ -39,7 +39,9 @@ class Bullet extends GameObject {
     }
 
     onUpdate(dt) {
-        this.move(dt);
+        if(Settings.gamePaused === false) {
+            this.move(dt);
+        }
     }
 
     move(dt) {

@@ -137,30 +137,32 @@ class Tank extends GameObject {
     // Movement logic
     move(dt) {
 
-        this.llast_x = this.last_x;
-        this.llast_y = this.last_y;
-        this.llast_angle = this.last_angle;
-        this.llast_dx = this.last_dx;
-        this.llast_dy = this.last_dy;
+        if(Settings.gamePaused === false) {
+            this.llast_x = this.last_x;
+            this.llast_y = this.last_y;
+            this.llast_angle = this.last_angle;
+            this.llast_dx = this.last_dx;
+            this.llast_dy = this.last_dy;
 
-        this.last_x = this.x;
-        this.last_y = this.y;
-        this.last_angle = this.angle;
-        this.last_dx = this.dx;
-        this.last_dy = this.dy;
+            this.last_x = this.x;
+            this.last_y = this.y;
+            this.last_angle = this.angle;
+            this.last_dx = this.dx;
+            this.last_dy = this.dy;
 
-        // Move
-        this.x += dt * this.movementSpeed * this.dx;
-        this.y += dt * this.movementSpeed * this.dy;
+            // Move
+            this.x += dt * this.movementSpeed * this.dx;
+            this.y += dt * this.movementSpeed * this.dy;
 
-        app.collisionCheck(dt);
-        this.updateCorners(Math.abs(dt));
+            app.collisionCheck(dt);
+            this.updateCorners(Math.abs(dt));
 
-        if(this.hasShield === true) {
-            for(var child of this.nodes) {
-                if(child instanceof Shield) {
-                    child.x = this.x;
-                    child.y = this.y;
+            if(this.hasShield === true) {
+                for(var child of this.nodes) {
+                    if(child instanceof Shield) {
+                        child.x = this.x;
+                        child.y = this.y;
+                    }
                 }
             }
         }
@@ -169,59 +171,62 @@ class Tank extends GameObject {
     // Rotation logic
     rotate(dt) {
 
-        this.llast_x = this.last_x;
-        this.llast_y = this.last_y;
-        this.llast_angle = this.last_angle;
-        this.llast_dx = this.last_dx;
-        this.llast_dy = this.last_dy;
+        if(Settings.gamePaused === false) {
+            this.llast_x = this.last_x;
+            this.llast_y = this.last_y;
+            this.llast_angle = this.last_angle;
+            this.llast_dx = this.last_dx;
+            this.llast_dy = this.last_dy;
 
-        this.last_x = this.x;
-        this.last_y = this.y;
-        this.last_angle = this.angle;
-        this.last_dx = this.dx;
-        this.last_dy = this.dy;
+            this.last_x = this.x;
+            this.last_y = this.y;
+            this.last_angle = this.angle;
+            this.last_dx = this.dx;
+            this.last_dy = this.dy;
 
-        // Rotate
-        this.angle += dt * this.rotationSpeed;
-        if (this.angle < 0)
-            this.angle += 360;
+            // Rotate
+            this.angle += dt * this.rotationSpeed;
+            if (this.angle < 0)
+                this.angle += 360;
 
-        this.angle %= 360;
+            this.angle %= 360;
 
-        // Update the movement vectors
-        this.dx = Math.cos(this.angle * Math.PI / 180) * (-1);
-        this.dy = Math.sin(this.angle * Math.PI / 180) * (-1);
+            // Update the movement vectors
+            this.dx = Math.cos(this.angle * Math.PI / 180) * (-1);
+            this.dy = Math.sin(this.angle * Math.PI / 180) * (-1);
 
-        app.collisionCheck(dt);
-        this.updateCorners(Math.abs(dt));
+            app.collisionCheck(dt);
+            this.updateCorners(Math.abs(dt));
 
-        if(this.hasShield === true) {
-            for(var child of this.nodes) {
-                if(child instanceof Shield) {
-                    child.x = this.x;
-                    child.y = this.y;
+            if(this.hasShield === true) {
+                for(var child of this.nodes) {
+                    if(child instanceof Shield) {
+                        child.x = this.x;
+                        child.y = this.y;
+                    }
                 }
             }
         }
     }
 
     shoot() {
+        if(Settings.gamePaused === false) {
+            if(this.bulletStrength === 3) { // Laser gun
+                var laser = new Laser(app.canvas, (1600 * this.x) / app.canvas.width + this.dx * 50,
+                    (900 * this.y) / app.canvas.height + this.dy * 50, this.dx, this.dy);
+                app.add(laser);
+            }
+            else { // Standard gun
+                var time = Date.now();
 
-        if(this.bulletStrength === 3) { // Laser gun
-            var laser = new Laser(app.canvas, (1600 * this.x) / app.canvas.width + this.dx * 50,
-                (900 * this.y) / app.canvas.height + this.dy * 50, this.dx, this.dy);
-            app.add(laser);
-        }
-        else { // Standard gun
-            var time = Date.now();
+                if(time - this.lastShot > this.rof){ // Tank is allowed to shoot
+                    this.lastShot = time;
 
-            if(time - this.lastShot > this.rof){ // Tank is allowed to shoot
-                this.lastShot = time;
+                    var bullet = new Bullet(app.canvas, (1600 * this.x) / app.canvas.width + this.dx * 50,
+                        (900 * this.y) / app.canvas.height + this.dy * 50, 15, 15, this.dx, this.dy, this.bulletStrength);
 
-                var bullet = new Bullet(app.canvas, (1600 * this.x) / app.canvas.width + this.dx * 50,
-                    (900 * this.y) / app.canvas.height + this.dy * 50, 15, 15, this.dx, this.dy, this.bulletStrength);
-
-                app.add(bullet);
+                    app.add(bullet);
+                }
             }
         }
     }
