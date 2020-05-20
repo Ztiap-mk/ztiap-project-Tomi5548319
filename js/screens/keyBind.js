@@ -5,9 +5,12 @@ function keyBind(canvas, setting) {
 
     window.add(new Text(canvas, app.context, 600, 375, 500, "Press a key", "black", 75));
     window.onkeyDown = function (key) {
+        if(key !== "Escape") {
+            var command = "" + setting + " = \"" + key + "\";";
+            eval(command);
+        }
+        
         Settings.gamePaused = false;
-        var command = "" + setting + " = \"" + key + "\";";
-        eval(command);
         app.nodes = settings(app.canvas);
     };
 
