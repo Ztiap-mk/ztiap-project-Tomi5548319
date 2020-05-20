@@ -27,15 +27,10 @@ function round2(canvas, roundsWon1, roundsWon2) {
                 continue;
             }
 
-            // Boxes on spawn
-            if((i <= 2 && j <= 7) || (i >= 1600 / box_size - 3 && j >= (900 - app.windowOffset) / box_size - 6)){
-                window.add(new Box(canvas, "wood", i * box_size, j * box_size, box_size, box_size));
-                continue;
-            }
-
             // Middle wall
             if(j >= 8 && j <= 9 && i > 9 && i < 1600 / box_size - 10)
                 window.add(new Box(canvas, "wall", i * box_size, j * box_size, box_size, box_size));
+
         }
 
     nodes.push(window);

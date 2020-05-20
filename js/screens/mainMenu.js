@@ -41,6 +41,7 @@ function mainMenu(canvas) {
         if (Settings.sound.muted === true) {
             this.imgSrc = "img/sound_on.svg";
             Settings.sound.muted = false;
+            var sound = new Sound("sounds/object_not_broken/edited.mp3", Settings.sound, 0.3);
 
         } else {
             this.imgSrc = "img/sound_off.svg";

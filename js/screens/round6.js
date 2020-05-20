@@ -2,6 +2,7 @@ function round6(canvas, roundsWon1, roundsWon2) {
     // TODO make different maps
     console.log("round 6");
 
+    var nodes = [];
     var window = prepareRound(canvas, roundsWon1, roundsWon2);
 
     var box_size = 50;
@@ -37,5 +38,6 @@ function round6(canvas, roundsWon1, roundsWon2) {
                 window.add(new Box(canvas, "wood", i * box_size, j * box_size, box_size, box_size));
         }
 
-    return window;
+    nodes.push(window);
+    return nodes;
 }

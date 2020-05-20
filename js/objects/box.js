@@ -29,11 +29,15 @@ class Box extends GameObject {
 
     break(strength) {
         var sound;
+        var powerup;
 
         switch (this.type) {
             case "iron":
                 if (strength > 1) {
                     sound = new Sound("sounds/iron_box_broken/edited.mp3", Settings.sound, 1);
+                    powerup = Math.floor((Math.random() * 100) + 1); // 1-100
+                    if(powerup <= 50) // 50% chance of dropping a powerup
+                        Powerup.generate(app.canvas, 1600 * this.x / app.canvas.width, 900 * this.y / app.canvas.height, 1600 * this.width / app.canvas.width, 900 * this.height / app.canvas.height);
                     app.remove(this);
                 } else
                     sound = new Sound("sounds/object_not_broken/edited.mp3", Settings.sound, 0.3);
@@ -41,8 +45,8 @@ class Box extends GameObject {
                 break;
             case "wood":
                 sound = new Sound("sounds/wooden_box_broken/edited.mp3", Settings.sound, 0.3);
-                var powerup = Math.floor((Math.random() * 100) + 1); // 1-100
-                if(powerup <= 50) // 50% chance of dropping a powerup
+                powerup = Math.floor((Math.random() * 100) + 1); // 1-100
+                if(powerup <= 30) // 30% chance of dropping a powerup
                     Powerup.generate(app.canvas, 1600 * this.x / app.canvas.width, 900 * this.y / app.canvas.height, 1600 * this.width / app.canvas.width, 900 * this.height / app.canvas.height);
 
                 app.remove(this);

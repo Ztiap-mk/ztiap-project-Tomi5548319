@@ -5,6 +5,8 @@ class Laser extends GameObject {
         this.x2 = this.x + dx;
         this.y2 = this.y + dy;
 
+        this.collidedWithTank = false;
+
         var window = {
             y: 0,
             height: 0
@@ -34,7 +36,8 @@ class Laser extends GameObject {
 
         this.checkCollision(app.nodes);
 
-        app.remove(this);
+        if (this.collidedWithTank === false)
+            app.remove(this);
     }
 
     checkCollision(scene) {
@@ -137,10 +140,10 @@ class Laser extends GameObject {
         if(obj instanceof Box)
             obj.break(3);
         if(obj instanceof Tank) {
+            this.collidedWithTank = true;
 
             obj.lose(); // Laser penetrates through everything
             var sound = new Sound("sounds/enemy_destroyed/edited.mp3", Settings.sound, 0.3);
-
         }
     }
 }
