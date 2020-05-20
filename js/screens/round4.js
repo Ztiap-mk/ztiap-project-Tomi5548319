@@ -1,5 +1,4 @@
 function round4(canvas, roundsWon1, roundsWon2) {
-    // TODO make different maps
     console.log("round 4");
 
     var nodes = [];
@@ -34,7 +33,7 @@ function round4(canvas, roundsWon1, roundsWon2) {
             }
 
             // Wooden boxes
-            if ((i % 3 === 1 && i > 5 && i < 1600 / box_size - 6 && j % 3 === 1) /*|| i <= 3 || i >= 1600 / box_size - 4*/)
+            if (i % 3 === 1 && i > 5 && i < 1600 / box_size - 6 && j % 3 === 1)
                 window.add(new Box(canvas, "wood", i * box_size, j * box_size, box_size, box_size));
         }
 

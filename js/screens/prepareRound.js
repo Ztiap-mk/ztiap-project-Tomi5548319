@@ -61,8 +61,15 @@ function prepareRound(canvas, roundsWon1, roundsWon2) {
                     node.lines = node.splitTextIntoLines("" + enemy.roundsWon, app.context);
             app.nodes = gameOver(2, app.nodes, app.canvas);
         }
-        else
-            eval("app.nodes = round" + ((enemy.roundsWon + this.roundsWon) % 9 + 1) + "(app.canvas, " + this.roundsWon + ", " + enemy.roundsWon + ");");
+        else {
+            if(this.roundsWon + enemy.roundsWon < 5)
+                eval("app.nodes = round" + ((enemy.roundsWon + this.roundsWon) % 5 + 1) + "(app.canvas, " + this.roundsWon + ", " + enemy.roundsWon + ");");
+            else {
+                var random = Math.floor((Math.random() * 5) + 1);
+                eval("app.nodes = round" + random + "(app.canvas, " + this.roundsWon + ", " + enemy.roundsWon + ");");
+            }
+        }
+
 
     };
 
@@ -113,8 +120,15 @@ function prepareRound(canvas, roundsWon1, roundsWon2) {
                     node.lines = node.splitTextIntoLines("" + enemy.roundsWon, app.context);
             app.nodes = gameOver(1, app.nodes, app.canvas);
         }
-        else
-            eval("app.nodes = round" + ((enemy.roundsWon + this.roundsWon) % 9 + 1) + "(app.canvas, " + enemy.roundsWon + ", " + this.roundsWon + ");");
+        else {
+            if(this.roundsWon + enemy.roundsWon < 5)
+                eval("app.nodes = round" + ((enemy.roundsWon + this.roundsWon) % 5 + 1) + "(app.canvas, " + enemy.roundsWon + ", " + this.roundsWon + ");");
+            else {
+                var random = Math.floor((Math.random() * 5) + 1);
+                eval("app.nodes = round" + random + "(app.canvas, " + enemy.roundsWon + ", " + this.roundsWon + ");");
+            }
+        }
+
 
     };
 

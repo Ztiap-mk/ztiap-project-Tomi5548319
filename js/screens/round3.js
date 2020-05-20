@@ -1,5 +1,4 @@
 function round3(canvas, roundsWon1, roundsWon2) {
-    // TODO make different maps
     console.log("round 3");
 
     var nodes = [];

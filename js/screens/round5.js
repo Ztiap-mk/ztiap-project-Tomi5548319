@@ -1,5 +1,4 @@
 function round5(canvas, roundsWon1, roundsWon2) {
-    // TODO make different maps
     console.log("round 5");
 
     var nodes = [];
@@ -28,13 +27,13 @@ function round5(canvas, roundsWon1, roundsWon2) {
             }
 
             // Iron boxes
-            if(i % 3 === 1 && i > 7 && i < 1600 / box_size - 8 && j % 3 === 1 && j > 5 && j < (900 - app.windowOffset) / box_size - 3){
+            if(i > 7 && i < 1600 / box_size - 8 && j > 5 && j < (900 - app.windowOffset) / box_size - 4){
                 window.add(new Box(canvas, "iron", i * box_size, j * box_size, box_size, box_size));
                 continue;
             }
 
             // Wooden boxes
-            if ((i % 3 === 1 && i > 5 && i < 1600 / box_size - 6 && j % 3 === 1) /*|| i <= 3 || i >= 1600 / box_size - 4*/)
+            if (i > 5 && i < 1600 / box_size - 6 && j > 3 && j < (900 - app.windowOffset) / box_size - 2)
                 window.add(new Box(canvas, "wood", i * box_size, j * box_size, box_size, box_size));
         }
 

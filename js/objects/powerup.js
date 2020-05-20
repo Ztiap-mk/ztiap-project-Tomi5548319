@@ -37,7 +37,7 @@ class Powerup extends GameObject {
             powerup.src = "img/powerup_ammo.svg"
         }
 
-        else if(rand <= 60){ // laser
+        else if(rand <= 34){ // laser
             powerup.type = 1;
             var img = new AnimatedImage(canvas, x_mult, y_mult, width_mult, height_mult, "img/powerup_laser.svg", 200, 200, 2, 500);
             powerup.add(img);
