@@ -18,10 +18,11 @@ class Powerup extends GameObject {
     // Redefine ondraw function
     ondraw(context) {
 
-        var img = new Image();
-        img.src = this.src;
-
-        context.drawImage(img, this.x, this.y, this.width, this.height);
+        if(this.type !== 1) {
+            var img = new Image();
+            img.src = this.src;
+            context.drawImage(img, this.x, this.y, this.width, this.height);
+        }
 
     }
 
@@ -36,9 +37,10 @@ class Powerup extends GameObject {
             powerup.src = "img/powerup_ammo.svg"
         }
 
-        else if(rand <= 34){ // laser
+        else if(rand <= 60){ // laser
             powerup.type = 1;
-            powerup.src = "img/powerup_laser.svg"
+            var img = new AnimatedImage(canvas, x_mult, y_mult, width_mult, height_mult, "img/powerup_laser.svg", 200, 200, 2, 500);
+            powerup.add(img);
         }
 
         else if(rand <= 67){ // shield

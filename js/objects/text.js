@@ -13,6 +13,12 @@ class Text extends GameObject {
         this.border = false;
         this.selected = false;
 
+        // Gap between text and border
+        this.x -= 5 * canvas.width / 1600;
+        this.width += 10 * canvas.width / 1600;
+        this.y -= 5 * canvas.height / 900;
+        this.height += 10 * canvas.height / 900;
+
         this.height *= this.lines.length; // Update the height based on the number of lines
     }
 
@@ -37,7 +43,7 @@ class Text extends GameObject {
         context.fillStyle = this.colour;
 
         for (var i = 0; i < this.lines.length; i++)
-            context.fillText(this.lines[i], this.x, this.y + this.textSize * (i + 1));
+            context.fillText(this.lines[i], this.x + 5 * canvas.width / 1600, this.y + this.textSize * (i + 1));
 
     }
 
