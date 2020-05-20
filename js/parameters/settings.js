@@ -7,12 +7,12 @@ class Settings {
     static resolution = "medium";
 
     static sound = {
-        muted: true,
+        muted: false,
         volume: 0.3
     }
 
     static music = {
-        muted: true,
+        muted: false,
         volume: 0.3
     }
 

@@ -1,6 +1,7 @@
 sounds/
 zaloha/
 *.mp3
+*.mp4
 *.wav
 *.php
 *.db

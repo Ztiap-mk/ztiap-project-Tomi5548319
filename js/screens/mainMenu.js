@@ -7,6 +7,14 @@ function mainMenu(canvas) {
     app.music = new Sound("sounds/home_screen_loop/Two Steps From Hell - To Glory.mp3", Settings.music, 0.5);
     app.music.sound.loop = true;
 
+    var background = new Window(app.canvas, 0, 0, 1600, 900);
+    background.backgroundColor = "#c0c0c0"; // light gray
+    nodes.push(background);
+
+    //var demo = new Video(app.canvas, "img/backgroundVideo4.mp4", 0, 0, 1557, 679);
+    var demo = new Video(app.canvas, "img/backgroundVideo5.mp4", 0, 100, 1598, 698);
+    nodes.push(demo);
+
     var title = new AnimatedImage(app.canvas, 400, 25, 700, 150, "img/title.png", 776, 102, 6, 150);
     nodes.push(title);
 
