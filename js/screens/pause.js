@@ -1,6 +1,8 @@
 function pause(canvas) {
+    app.music.pause();
+
     var window = new Window(canvas, 400, 200, 800, 450);
-    window.backgroundColor = "#9090ff";
+    window.backgroundColor = "#a0ffa0";
     window.id = "pause";
 
     window.add(new Text(canvas, app.context, 550, 350, 500, "Game paused", "black", 75));
@@ -12,6 +14,7 @@ function pause(canvas) {
             if(child instanceof Window && child.id === "pause")
                 app.remove(child);
 
+        app.music.play();
         Settings.gamePaused = false;
     };
     window.add(cross);
@@ -29,6 +32,7 @@ function pause(canvas) {
             if(child instanceof Window && child.id === "pause")
                 app.remove(child);
 
+        app.music.play();
         Settings.gamePaused = false;
     };
     window.add(buttonCancel);
